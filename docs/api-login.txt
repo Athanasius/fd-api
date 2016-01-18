@@ -3,6 +3,11 @@ One of these cookies is marked 'discard', so you shouldn't store it
 persistently.  However if you do then you won't need to perform the
 login step each time, instead being able to go straight to step #3.
 
+Also, the way I use the API relies on handling HTTP redirects myself.
+If you use a library that automatically follows the redirects you'll
+likely get confused by this guide.  In step #1 below rather than seeing
+the 302 you'd instead get a 200 and the contents of the login form.
+
 First you need to retrieve the base URL to check if the system needs you
 to login or if your current cookies are good.
 
