@@ -29,7 +29,7 @@ my $ua = LWP::UserAgent->new(
 	'agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12B411',
 	'requests_redirectable' => []
 );
-$ua->cookie_jar(HTTP::Cookies->new(file => "lwpcookies.txt", autosave => 1));
+$ua->cookie_jar(HTTP::Cookies->new(file => "lwpcookies.txt", autosave => 1, ignore_discard => 1));
 $ua->timeout(10);
 
 my ($req, $res, $tree);

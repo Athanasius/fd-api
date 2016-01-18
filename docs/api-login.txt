@@ -1,4 +1,7 @@
 You will need to store and send cookies for the authentication to work.
+One of these cookies is marked 'discard', so you shouldn't store it
+persistently.  However if you do then you won't need to perform the
+login step each time, instead being able to go straight to step #3.
 
 First you need to retrieve the base URL to check if the system needs you
 to login or if your current cookies are good.
@@ -39,3 +42,8 @@ to login or if your current cookies are good.
    The data is returned as a JSON object.  An example can be found at:
 
    	<http://www.miggy.org/games/elite-dangerous/misc/example-api-profile.json>
+
+4) If you want to logout/de-authenticate then simply delete all cookies
+for the site.  I've found no method to TELL the FD server to forget
+about a particular auth.  There may be one, after all it would match
+what 'Logout Machine' on the launcher 'Options' menu does.
