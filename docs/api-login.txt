@@ -1,0 +1,41 @@
+You will need to store and send cookies for the authentication to work.
+
+First you need to retrieve the base URL to check if the system needs you
+to login or if your current cookies are good.
+
+1) GET https://companion.orerve.net
+
+  Now check the HTTP response code.  If it's a 302 (redirect) to /user/login
+  then you need to supply email and password to the forum there.
+  If it's just a 200 (OK) then you're set.
+
+2) POST https://companion.orerve.net/user/login
+
+  You need to send data: email=<email>&password=<password>
+  i.e. email=flibble@example.org&password=supersecure
+
+  Again, check the HTTP response code.  If it's a 302 to '/' you're
+  done and can now query the profile.
+
+  However if it's a 302 to '/user/confirm' then you need to supply the
+  auth code from email.
+
+  POST https://companion.orerve.net/user/confirm
+  code=<confirmation code>
+  
+  Check Response code, if it's 302 to '/' you're good to go.
+
+  If the code isn't recognised you'll get a 200 HTTP response as it
+  wants to simply show you the HTML form to try again and you're already
+  'on' that URL.
+   
+3) Retrieve the commander profile:
+
+   GET https://companion.orerve.net/profile
+
+   You should get a 200 (OK) HTTP response.  If not then the system
+   still doesn't think you're logged in.
+
+   The data is returned as a JSON object.  An example can be found at:
+
+   	<http://www.miggy.org/games/elite-dangerous/misc/example-api-profile.json>

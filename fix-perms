@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /home/athan/public_html/games/elite-dangerous/fd-api
+chmod 600 config.txt
+chmod -R o+rX ED *.pl
