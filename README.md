@@ -6,10 +6,10 @@ See docs/ directory for details on how it works.
 To use this code you'll need to put at least your username/email and
 password into config.txt:
 
-`
+```
 user_name: someuser@example.com
 user_password: YourSuperSecretPassword
-`
+```
 
 At time of typing the code just spits out the resulting profile data.
 It's retrieved as a JSON object so easy enough to work with.
