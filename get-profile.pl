@@ -36,6 +36,7 @@ my ($req, $res, $tree);
 $req = HTTP::Request->new('GET', $config->getconf('url_base'));
 #ua_debug_enable($ua);
 $res = $ua->request($req);
+#print $res->headers_as_string("\n");
 if (! $res->is_success) {
 	#printf STDERR "Failed url_base\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 	if ($res->code == 302 and $res->header('Location') eq $config->getconf('url_login')) {
@@ -60,8 +61,8 @@ if (! $res->is_success) {
 }
 
 my $json = decode_json($res->content);
-print Dumper($json);
-#print $res->content;
+#print Dumper($json);
+print $res->content;
 exit(0);
 
 sub do_login {
@@ -69,6 +70,7 @@ sub do_login {
 	$req->content_type('application/x-www-form-urlencoded');
 	$req->content("email=" . $config->getconf('user_name') . "&password=" . $config->getconf('user_password'));
 	$res = $ua->request($req); #, \%form);
+#print $res->headers_as_string("\n");
 	if (! $res->is_success) {
 #		printf STDERR "Failed url_login\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 		if ($res->code == 302 and $res->header('Location') eq '/') {
@@ -84,6 +86,7 @@ sub do_login {
 		$req->content_type('application/x-www-form-urlencoded');
 		$req->content("code=" . $code);
 		$res = $ua->request($req); #, \%form);
+#print $res->headers_as_string("\n");
 		if (! $res->is_success) {
 			#printf STDERR "Failed url_confirm\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 			if ($res->code == 302 and $res->header('Location') eq '/') {
