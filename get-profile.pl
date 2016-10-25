@@ -38,7 +38,7 @@ $req = HTTP::Request->new('GET', $config->getconf('url_base'));
 $res = $ua->request($req);
 #print $res->headers_as_string("\n");
 if (! $res->is_success) {
-	#printf STDERR "Failed url_base\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
+#	printf STDERR "Failed url_base\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 	if ($res->code == 302 and $res->header('Location') eq $config->getconf('url_login')) {
 		print "Login required, so performing that...\n";
 		do_login();
@@ -73,10 +73,15 @@ sub do_login {
 #print $res->headers_as_string("\n");
 	if (! $res->is_success) {
 #		printf STDERR "Failed url_login\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
+		if ($res->code == 429) {
+			printf STDERR "429: %s - aborting\n", $res->message;
+			exit(1);
+		}
 		if ($res->code == 302 and $res->header('Location') eq '/') {
 			# Login succeeded, no need for auth code
 			return
 		}
+		printf STDERR "Login succeeded, need auth code: %s, %s\n", $res->code, $res->message;
 		# Login succeeded, check email for auth code.
 		LOGIN_ENTER_CODE:
 		print "Login succeeded, check email for authentication code and enter it below\nCode: ";
