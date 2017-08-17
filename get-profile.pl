@@ -36,18 +36,18 @@ my ($req, $res, $tree);
 $req = HTTP::Request->new('GET', $config->getconf('url_base'));
 #ua_debug_enable($ua);
 $res = $ua->request($req);
-#print $res->headers_as_string("\n");
+print STDERR $res->headers_as_string("\n");
 if (! $res->is_success) {
 #	printf STDERR "Failed url_base\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 	if ($res->code == 302 and $res->header('Location') eq $config->getconf('url_login')) {
-		print "Login required, so performing that...\n";
+		printf STDERR "Login required, so performing that...\n";
 		do_login();
 	}
 } else {
 	#printf STDERR "url_base Success!\nContents: %s\n", Dumper($res->content);
-	print "No login required\n";
+	printf STDERR "No login required\n";
 }
-print "Querying profile...\n";
+printf STDERR "Querying profile...\n";
 $req = HTTP::Request->new('GET', $config->getconf('url_base') . $config->getconf('url_query'));
 $res = $ua->request($req);
 if (! $res->is_success) {
@@ -56,7 +56,7 @@ if (! $res->is_success) {
 		die("Tried to query profile but was redirected to login, something went wrong.");
 	}
 } else {
-	print "Profile retrieved\n";
+	printf STDERR "Profile retrieved\n";
 	#printf STDERR "url_query Success!\nContents: %s\n", Dumper($res->content);
 }
 
