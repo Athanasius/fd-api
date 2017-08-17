@@ -14,7 +14,7 @@ to login or if your current cookies are good.
 1) GET https://companion.orerve.net
 
   Now check the HTTP response code.  If it's a 302 (redirect) to /user/login
-  then you need to supply email and password to the forum there.
+  then you need to supply email and password to the form there.
   If it's just a 200 (OK) then you're set.
 
 2) POST https://companion.orerve.net/user/login
