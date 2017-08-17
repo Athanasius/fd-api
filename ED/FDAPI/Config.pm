@@ -39,6 +39,8 @@ sub new {
 			$config{'user_name'} = $1;
 		} elsif (/^user_password:\s+(.*)$/i) {
 			$config{'user_password'} = $1;
+		} elsif (/^url_base:\s+(.*)$/i) {
+			$config{'url_base'} = $1;
 		} else {
 			printf STDERR "Unknown field in config file '%s', line %d : %s\n", $file, $line, $_;
 		}
