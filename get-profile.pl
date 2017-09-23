@@ -62,7 +62,7 @@ if (! $res->is_success) {
 
 my $json = decode_json($res->content);
 #print Dumper($json);
-print $res->content;
+print $res->content, "\n";
 exit(0);
 
 sub do_login {
