@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w -I.
 # vim: textwidth=0 wrapmargin=0 shiftwidth=2 tabstop=2 softtabstop
 
 use strict;
@@ -26,7 +26,9 @@ if (!defined($config->getconf('user_password'))) {
 }
 
 my $ua = LWP::UserAgent->new(
-	'agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12B411',
+	#'agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12B411',
+	'agent' => 'EDCD-AthanasiusTest-0.0.1',
+#	'agent' => 'EDCD-EliteG19s-3.1.0',
 	'requests_redirectable' => []
 );
 $ua->cookie_jar(HTTP::Cookies->new(file => "lwpcookies.txt", autosave => 1, ignore_discard => 1));
@@ -34,9 +36,10 @@ $ua->timeout(10);
 
 my ($req, $res, $tree);
 $req = HTTP::Request->new('GET', $config->getconf('url_base'));
-#ua_debug_enable($ua);
+ua_debug_enable($ua);
+print STDERR $req->as_string;
 $res = $ua->request($req);
-print STDERR $res->headers_as_string("\n");
+#print STDERR $res->headers_as_string("\n");
 if (! $res->is_success) {
 #	printf STDERR "Failed url_base\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 	if ($res->code == 302 and $res->header('Location') eq $config->getconf('url_login')) {
@@ -51,8 +54,8 @@ printf STDERR "Querying profile...\n";
 $req = HTTP::Request->new('GET', $config->getconf('url_base') . $config->getconf('url_query'));
 $res = $ua->request($req);
 if (! $res->is_success) {
-	#printf STDERR "Failed url_query\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 	if ($res->code == 302 and $res->header('Location') eq $config->getconf('url_login')) {
+		printf STDERR "Failed url_query\nCode: %s\nMessage: %s\nHeaders: %s\nContents: %s\n", $res->code, $res->message, $res->as_string, Dumper($res->content);
 		die("Tried to query profile but was redirected to login, something went wrong.");
 	}
 } else {
@@ -78,6 +81,7 @@ sub do_login {
 			exit(1);
 		}
 		if ($res->code == 302 and $res->header('Location') eq '/') {
+			printf STDERR "Login succeeded\n"; #Code: %s\nMessage: %s\nHeaders: %s\nContents: %s\n", $res->code, $res->message, $res->as_string, Dumper($res->content);
 			# Login succeeded, no need for auth code
 			return
 		}
