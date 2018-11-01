@@ -34,6 +34,7 @@ my $ua = LWP::UserAgent->new(
 $ua->cookie_jar(HTTP::Cookies->new(file => "lwpcookies.txt", autosave => 1, ignore_discard => 1));
 $ua->timeout(10);
 
+my $token;
 my ($req, $res, $tree);
 $req = HTTP::Request->new('GET', $config->getconf('url_base'));
 ua_debug_enable($ua);
@@ -44,14 +45,22 @@ if (! $res->is_success) {
 #	printf STDERR "Failed url_base\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
 	if ($res->code == 302 and $res->header('Location') eq $config->getconf('url_login')) {
 		printf STDERR "Login required, so performing that...\n";
-		do_login();
+
+		$req = HTTP::Request->new('GET', $config->getconf('url_base') . $config->getconf('url_login'));
+		$res = $ua->request($req);
+		LOGIN_ENTER_TOKEN:
+		print "Login/Auth is required, please go to <https://pts-companion.orerve.net>, complete the login process, approve on 'Approve Action', then paste the 'access_token' value below:\n\n";
+		$token = readline;
+		chomp($token);
 	}
 } else {
 	#printf STDERR "url_base Success!\nContents: %s\n", Dumper($res->content);
 	printf STDERR "No login required\n";
 }
+
 printf STDERR "Querying profile...\n";
 $req = HTTP::Request->new('GET', $config->getconf('url_base') . $config->getconf('url_query'));
+$req->header('x-frontier-auth' => $token);
 $res = $ua->request($req);
 if (! $res->is_success) {
 	if ($res->code == 302 and $res->header('Location') eq $config->getconf('url_login')) {
