@@ -1,0 +1,351 @@
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+07:35:57 1$ curl --verbose --location https://pts-companion.orerve.net
+* Rebuilt URL to: https://pts-companion.orerve.net/
+*   Trying 54.228.184.121...
+* TCP_NODELAY set
+* Connected to pts-companion.orerve.net (54.228.184.121) port 443 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+  CApath: /etc/ssl/certs
+* TLSv1.2 (OUT), TLS header, Certificate Status (22):
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+* TLSv1.2 (OUT), TLS change cipher, Client hello (1):
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+* TLSv1.2 (IN), TLS change cipher, Client hello (1):
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN, server did not agree to a protocol
+* Server certificate:
+*  subject: OU=Domain Control Validated; CN=*.orerve.net
+*  start date: Aug 29 10:31:01 2017 GMT
+*  expire date: Aug 29 10:31:01 2019 GMT
+*  subjectAltName: host "pts-companion.orerve.net" matched cert's "*.orerve.net"
+*  issuer: C=US; ST=Arizona; L=Scottsdale; O=Starfield Technologies, Inc.; OU=http://certs.starfieldtech.com/repository/; CN=Starfield Secure Certificate Authority - G2
+*  SSL certificate verify ok.
+> GET / HTTP/1.1
+> Host: pts-companion.orerve.net
+> User-Agent: curl/7.52.1
+> Accept: */*
+> 
+< HTTP/1.1 302 Found
+< Cache-Control: no-transform
+< Content-Type: text/html;charset=UTF-8
+< Date: Thu, 01 Nov 2018 07:37:35 GMT
+< Expires: Thu, 19 Nov 1981 08:52:00 GMT
+< Location: /login
+< Pragma: no-cache
+< Server: Apache
+< Set-Cookie: CompanionApp=m6rk5b5cbbv95mq9djs9doq0c6; path=/
+< Strict-Transport-Security: max-age=16070400; includeSubDomains
+< X-UA-Compatible: IE=edge
+< Content-Length: 0
+< Connection: keep-alive
+< 
+* Curl_http_done: called premature == 0
+* Connection #0 to host pts-companion.orerve.net left intact
+* Issue another request to this URL: 'https://pts-companion.orerve.net/login'
+* Found bundle for host pts-companion.orerve.net: 0x55aa572dc890 [can pipeline]
+* Re-using existing connection! (#0) with host pts-companion.orerve.net
+* Connected to pts-companion.orerve.net (54.228.184.121) port 443 (#0)
+> GET /login HTTP/1.1
+> Host: pts-companion.orerve.net
+> User-Agent: curl/7.52.1
+> Accept: */*
+> 
+< HTTP/1.1 302 Found
+< Cache-Control: no-transform
+< Content-Type: application/json
+< Date: Thu, 01 Nov 2018 07:37:35 GMT
+< Expires: Thu, 19 Nov 1981 08:52:00 GMT
+< Location: https://auth.frontierstore.net/auth?state=e0a44c8c2c053d635a228c230bb83d4a&response_type=code&approval_prompt=auto&redirect_uri=https%3A%2F%2Fpts-companion.orerve.net%2Flogin&client_id=4e135d0a-e313-4ace-b76b-22947d1be13e
+< Pragma: no-cache
+< Server: Apache
+< Set-Cookie: CompanionApp=k5utk9qqu3pp4t1eavju99qp0l; path=/
+< Set-Cookie: access_token=1540971455%7C%7C0ec2cf704e81856219375c4e2a732afad77c0b8a; domain=pts-companion.orerve.net; path=/; expires=Wed, 31-Oct-2018 07:37:35 UTC; secure
+< Strict-Transport-Security: max-age=16070400; includeSubDomains
+< X-UA-Compatible: IE=edge
+< Content-Length: 0
+< Connection: keep-alive
+< 
+* Curl_http_done: called premature == 0
+* Connection #0 to host pts-companion.orerve.net left intact
+* Issue another request to this URL: 'https://auth.frontierstore.net/auth?state=e0a44c8c2c053d635a228c230bb83d4a&response_type=code&approval_prompt=auto&redirect_uri=https%3A%2F%2Fpts-companion.orerve.net%2Flogin&client_id=4e135d0a-e313-4ace-b76b-22947d1be13e'
+*   Trying 52.212.250.56...
+* TCP_NODELAY set
+* Connected to auth.frontierstore.net (52.212.250.56) port 443 (#1)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+  CApath: /etc/ssl/certs
+* TLSv1.2 (OUT), TLS header, Certificate Status (22):
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+* TLSv1.2 (OUT), TLS change cipher, Client hello (1):
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+* TLSv1.2 (IN), TLS change cipher, Client hello (1):
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN, server accepted to use h2
+* Server certificate:
+*  subject: CN=*.frontierstore.net
+*  start date: Apr 16 00:00:00 2018 GMT
+*  expire date: May 16 12:00:00 2019 GMT
+*  subjectAltName: host "auth.frontierstore.net" matched cert's "*.frontierstore.net"
+*  issuer: C=US; O=Amazon; OU=Server CA 1B; CN=Amazon
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0x55aa572c6dc0)
+> GET /auth?state=e0a44c8c2c053d635a228c230bb83d4a&response_type=code&approval_prompt=auto&redirect_uri=https%3A%2F%2Fpts-companion.orerve.net%2Flogin&client_id=4e135d0a-e313-4ace-b76b-22947d1be13e HTTP/1.1
+> Host: auth.frontierstore.net
+> User-Agent: curl/7.52.1
+> Accept: */*
+> 
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+< HTTP/2 200 
+< date: Thu, 01 Nov 2018 07:37:35 GMT
+< content-type: text/html; charset=UTF-8
+< set-cookie: AWSALB=B7Hj6Nvkey9kQYrFlyuwg0mJLbGmK/EVbkrnRTD3DxKpgcMZcOaRfAEOM+q+E9z3/QViIK6Q71/NYhsZDjf6NZXBB4OqVmXl8groVyr1MkDoTfR077bCgZ6L4d+c; Expires=Thu, 08 Nov 2018 07:37:35 GMT; Path=/
+< server: nginx/1.15.5
+< x-powered-by: PHP/7.2.10
+< set-cookie: PHPSESSID=2e7f43deb2dea5e5ff87d894d31a04bc; path=/; HttpOnly
+< cache-control: max-age=0, must-revalidate, private
+< allow: GET, PUT, POST, HEAD, DELETE
+< 
+<html>
+<head>
+    <title>Frontier Login</title>
+    <link href="/build/main.ae941266.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("login").submit()
+      }
+    </script>
+</head>
+<body>
+<header class="header small">
+    <div class="container">
+        <div class="col-sm-12 offset-sm-0 col-md-6 offset-md-3">
+            <img src="/build/images/logo_large.png" height="32"/><span class="logo-subtitle">Authentication Service</span>
+        </div>
+    </div>
+</header>
+<div class="container pt-2">
+    <div class="col-sm-12 offset-sm-0 col-md-6 offset-md-3">
+        
+    <h1>Login</h1>
+
+    
+        <div class="row justify-content-center">
+
+            <div class="col-2">
+                <a href="/auth/thirdparty/xbox">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-square fa-stack-2x"></i>
+                    <i class="fab fa-xbox fa-stack-1x fa-inverse"></i>
+                </span> </a>
+            </div>
+            <div class="col-2">
+                <a href="/auth/thirdparty/psn">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-square fa-stack-2x"></i>
+                    <i class="fab fa-playstation fa-stack-1x fa-inverse"></i>
+                </span> </a>
+            </div>
+            <div class="col-2">
+                <a href="/auth/thirdparty/steam">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-square fa-stack-2x"></i>
+                    <i class="fab fa-steam fa-stack-1x fa-inverse"></i>
+                </span> </a>
+            </div>
+        </div>
+
+
+        <form method="POST" class="form" id="login" action="/auth">
+
+            <div class="row">
+                <label for="username" class="col-md-12 col-form-label">Username / Email:</label>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-md-12">
+                    <input class="form-control" type="text" name="username" id="username"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="password_plain" class="col-sm-12  col-form-label">Password:</label>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <input class="form-control" type="password" name="password_plain" id="password_plain"/>
+                </div>
+            </div>
+
+            <button class="g-recaptcha btn btn-primary" data-sitekey="6LdOvC0UAAAAABQTbf9YZF10q8TN4NyUOuEmnj1i" data-callback="onSubmit">
+                Submit
+            </button>
+
+        </form>
+                </div>
+</div>
+<script src="/build/app.5c7a38de.js"></script>
+</body>
+* Curl_http_done: called premature == 0
+* Connection #1 to host auth.frontierstore.net left intact
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+07:24:07 0$ wget --server-response -O - https://pts-companion.orerve.net
+--2018-11-01 07:24:54--  https://pts-companion.orerve.net/
+Resolving pts-companion.orerve.net (pts-companion.orerve.net)... 176.34.234.43, 176.34.114.227, 54.228.184.121, ...
+Connecting to pts-companion.orerve.net (pts-companion.orerve.net)|176.34.234.43|:443... connected.
+HTTP request sent, awaiting response... 
+  HTTP/1.1 302 Found
+  Cache-Control: no-transform
+  Content-Type: text/html;charset=UTF-8
+  Date: Thu, 01 Nov 2018 07:24:54 GMT
+  Expires: Thu, 19 Nov 1981 08:52:00 GMT
+  Location: /login
+  Pragma: no-cache
+  Server: Apache
+  Set-Cookie: CompanionApp=oksild55b7jth3jta2a2locub4; path=/
+  Strict-Transport-Security: max-age=16070400; includeSubDomains
+  X-UA-Compatible: IE=edge
+  Content-Length: 0
+  Connection: keep-alive
+Location: /login [following]
+--2018-11-01 07:24:54--  https://pts-companion.orerve.net/login
+Reusing existing connection to pts-companion.orerve.net:443.
+HTTP request sent, awaiting response... 
+  HTTP/1.1 302 Found
+  Cache-Control: no-transform
+  Content-Type: application/json
+  Date: Thu, 01 Nov 2018 07:24:54 GMT
+  Expires: Thu, 19 Nov 1981 08:52:00 GMT
+  Location: https://auth.frontierstore.net/auth?state=49ed19569d9e44f9baad1cc268ffbb6c&response_type=code&approval_prompt=auto&redirect_uri=https%3A%2F%2Fpts-companion.orerve.net%2Flogin&client_id=4e135d0a-e313-4ace-b76b-22947d1be13e
+  Pragma: no-cache
+  Server: Apache
+  Set-Cookie: access_token=1540970694%7C%7C8a570dddfba451e8500a3effe8242046fe15b958; domain=pts-companion.orerve.net; path=/; expires=Wed, 31-Oct-2018 07:24:54 UTC; secure
+  Strict-Transport-Security: max-age=16070400; includeSubDomains
+  X-UA-Compatible: IE=edge
+  Content-Length: 0
+  Connection: keep-alive
+Location: https://auth.frontierstore.net/auth?state=49ed19569d9e44f9baad1cc268ffbb6c&response_type=code&approval_prompt=auto&redirect_uri=https%3A%2F%2Fpts-companion.orerve.net%2Flogin&client_id=4e135d0a-e313-4ace-b76b-22947d1be13e [following]
+--2018-11-01 07:24:54--  https://auth.frontierstore.net/auth?state=49ed19569d9e44f9baad1cc268ffbb6c&response_type=code&approval_prompt=auto&redirect_uri=https%3A%2F%2Fpts-companion.orerve.net%2Flogin&client_id=4e135d0a-e313-4ace-b76b-22947d1be13e
+Resolving auth.frontierstore.net (auth.frontierstore.net)... 54.154.84.158, 52.212.250.56
+Connecting to auth.frontierstore.net (auth.frontierstore.net)|54.154.84.158|:443... connected.
+HTTP request sent, awaiting response... 
+  HTTP/1.1 200 OK
+  Date: Thu, 01 Nov 2018 07:24:54 GMT
+  Content-Type: text/html; charset=UTF-8
+  Transfer-Encoding: chunked
+  Connection: keep-alive
+  Set-Cookie: AWSALB=M7pqj+8GlT+4teJIqvvINGn9y7CJqJdnFWkES3i03S9yyX/PH6Z7gd6xyD4TsBfuM5N5fH31D5D6W1JzbjF+tIy9qkhrA3ToYfXLoCPJQdMJ58tdYpQyYsDpUh15; Expires=Thu, 08 Nov 2018 07:24:54 GMT; Path=/
+  Server: nginx/1.15.5
+  X-Powered-By: PHP/7.2.10
+  Set-Cookie: PHPSESSID=80d05dac377fd7de639887a337dd427f; path=/; HttpOnly
+  Cache-Control: max-age=0, must-revalidate, private
+  Allow: GET, PUT, POST, HEAD, DELETE
+Length: unspecified [text/html]
+Saving to: ‘STDOUT’
+
+-                       [<=>                 ]       0  --.-KB/s               <html>
+<head>
+    <title>Frontier Login</title>
+    <link href="/build/main.ae941266.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("login").submit()
+      }
+    </script>
+</head>
+<body>
+<header class="header small">
+    <div class="container">
+        <div class="col-sm-12 offset-sm-0 col-md-6 offset-md-3">
+            <img src="/build/images/logo_large.png" height="32"/><span class="logo-subtitle">Authentication Service</span>
+        </div>
+    </div>
+</header>
+<div class="container pt-2">
+    <div class="col-sm-12 offset-sm-0 col-md-6 offset-md-3">
+        
+    <h1>Login</h1>
+
+    
+        <div class="row justify-content-center">
+
+            <div class="col-2">
+                <a href="/auth/thirdparty/xbox">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-square fa-stack-2x"></i>
+                    <i class="fab fa-xbox fa-stack-1x fa-inverse"></i>
+                </span> </a>
+            </div>
+            <div class="col-2">
+                <a href="/auth/thirdparty/psn">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-square fa-stack-2x"></i>
+                    <i class="fab fa-playstation fa-stack-1x fa-inverse"></i>
+                </span> </a>
+            </div>
+            <div class="col-2">
+                <a href="/auth/thirdparty/steam">
+                <span class="fa-stack fa-2x">
+                    <i class="fas fa-square fa-stack-2x"></i>
+                    <i class="fab fa-steam fa-stack-1x fa-inverse"></i>
+                </span> </a>
+            </div>
+        </div>
+
+
+        <form method="POST" class="form" id="login" action="/auth">
+
+            <div class="row">
+                <label for="username" class="col-md-12 col-form-label">Username / Email:</label>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-md-12">
+                    <input class="form-control" type="text" name="username" id="username"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="password_plain" class="col-sm-12  col-form-label">Password:</label>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <input class="form-control" type="password" name="password_plain" id="password_plain"/>
+                </div>
+            </div>
+
+            <button class="g-recaptcha btn btn-primary" data-sitekey="6LdOvC0UAAAAABQTbf9YZF10q8TN4NyUOuEmnj1i" data-callback="onSubmit">
+                Submit
+            </button>
+
+        </form>
+                </div>
+</div>
+<script src="/build/app.5c7a38de.js"></script>
+</body>
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
