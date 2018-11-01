@@ -7,7 +7,8 @@ package ED::FDAPI::Config;
 
 our %config = (
 	'url_base' => 'https://companion.orerve.net',
-	'url_login' => '/user/login',
+	'url_login' => '/login',
+	'url_auth' => 'https://auth.frontierstore.net/auth',
 	'url_confirm' => '/user/confirm',
 	'url_query' => '/profile'
 );

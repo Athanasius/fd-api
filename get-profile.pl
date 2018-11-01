@@ -69,13 +69,36 @@ print $res->content, "\n";
 exit(0);
 
 sub do_login {
-	$req = HTTP::Request->new('POST', $config->getconf('url_base') . $config->getconf('url_login'));
-	$req->content_type('application/x-www-form-urlencoded');
-	$req->content("email=" . $config->getconf('user_name') . "&password=" . $config->getconf('user_password'));
+	$req = HTTP::Request->new('GET', $config->getconf('url_base') . $config->getconf('url_login'));
+	# $req->content_type('application/x-www-form-urlencoded');
+	# $req->content("email=" . $config->getconf('user_name') . "&password=" . $config->getconf('user_password'));
 	$res = $ua->request($req); #, \%form);
 #print $res->headers_as_string("\n");
 	if (! $res->is_success) {
 #		printf STDERR "Failed url_login\nCode: %s\nMessage: %s\nContents: %s\n", $res->code, $res->message, Dumper($res->content);
+		if ($res->is_redirect() and index($res->header('Location'), $config->getconf('url_auth')) != -1 ) {
+			printf STDERR "302 from login to auth: %s\n", $res->header('Location');
+			my $auth_url = $res->header('Location');
+			$req = HTTP::Request->new('POST', $auth_url);
+			$req->content_type('application/x-www-form-urlencoded');
+			$req->content("username=" . $config->getconf('user_name') . "&password=" . $config->getconf('user_password'));
+			$res = $ua->request($req);
+
+			if ($res->is_redirect) {
+				printf STDERR "Auth: Redirect to '%s'\n", $res->header('Location');
+				$req = HTTP::Request->new('GET', $config->getconf('url_auth') . $res->header('Location'));
+				$res = $ua->request($req);
+
+				printf STDERR "Auth2: %s - %s\n", $res->code, $res->message;
+				exit(2)
+			}
+		}
+
+
+
+
+
+
 		if ($res->code == 429) {
 			printf STDERR "429: %s - aborting\n", $res->message;
 			exit(1);
