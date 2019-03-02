@@ -1,3 +1,7 @@
+** This is now obsolete, as the authentication changed to an OAuth2
+based method.**
+
+
 You will need to store and send cookies for the authentication to work.
 One of these cookies is marked 'discard', so you shouldn't store it
 persistently.  However if you do then you won't need to perform the
