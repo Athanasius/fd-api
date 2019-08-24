@@ -10,6 +10,7 @@ import cgi
 #cgitb.enable(display=0, logdir="/var/www/user-rw/athan.fysh.org/fd-api-logs")
 
 import urllib.request
+import requests
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
@@ -65,6 +66,7 @@ def main():
   ########################################
   authstate_fp = open("fd-api-authstate.json", mode="r")
   auth_state = json.load(authstate_fp)
+  authstate_fp.close()
   print(auth_state)
   ########################################
 
@@ -90,7 +92,7 @@ def main():
   ########################################
 
   ########################################
-  # Make and Authorization Code Request
+  # Make a Token Request
   ########################################
   uri = __config.get('auth_api_url') + '/token'
   data = {
@@ -114,17 +116,15 @@ def main():
   req_data = req_data.encode('ascii')
   print("req_data:\n{}\n".format(req_data))
   #return(0)
-  try:
-    req = urllib.request.Request(uri, req_data)
-    req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-    print("req: {}".format(pp.pformat(vars(req))))
-    return(0)
-    response = urllib.request.urlopen(req)
-    with urllib.request.urlopen(req) as response:
-      print("HTTP Status: {}".format(response.getcode()))
-      print(response.read())
-  except urllib.error.HTTPError as e:
-    __logger.error("HTTPError: {} - {}".format(e.getcode(), e.info()))
+  ### import http.client as http_client
+  ### http_client.HTTPConnection.debuglevel = 1
+  ### requests_log = logging.getLogger("requests.packages.urllib3")
+  ### requests_log.setLevel(logging.DEBUG)
+  ### requests_log.propagate = True
+
+  response = requests.post(uri, data=req_data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
+  tokens = json.loads(response.text)
+  print(response.text)
   ########################################
 
 ###########################################################################
