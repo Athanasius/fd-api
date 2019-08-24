@@ -1,3 +1,9 @@
+**This is now obsolete, as Frontier Developments moved over to an OAuth2
+based authentication scheme.**
+I may, or may not, find the time to write code to auth against the new
+scheme and otherwise document it.
+
+
 Code for retrieving an Elite Dangerous Commander's profile data using
 the iOS App API.
 
