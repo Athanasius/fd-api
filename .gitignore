@@ -4,3 +4,7 @@ docked*json*
 index.html
 out/
 fd-api-config.yaml
+docs/.*sw?
+*sw?
+fd-api-authstate.json
+curl-working.txt
