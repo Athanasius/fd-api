@@ -53,11 +53,29 @@ def main():
   __logger.debug('Start-Up')
 
   ########################################
+  # Retrieve and test state
+  ########################################
+  try:
+    authstate_fp = open("fd-api-authstate.json", mode="r")
+    auth_state = json.load(authstate_fp)
+    authstate_fp.close()
+    print(auth_state)
+	  ## Do we have an access_token, and does it work?
+    if 'access_token' in auth_state:
+      print("Found access_token, assuming it's good")
+      return(0)
+    print("No 'access_token in 'authstate', continuing...")
+  except FileNotFoundError as e:
+    print("No 'fd-api-authstate.json', continuing...")
+  ########################################
+
+  ########################################
   # Generate Code Verifier
   ########################################
   verifier = random.SystemRandom().getrandbits(8 * 32)
   __logger.debug('raw verifier: {}'.format(verifier))
-  #verifier_b64 = base64.b64encode(verifier.to_bytes(32, byteorder='big'))
+  # We need a Base64, URL safe, version of this. NB: the '=' on the end is
+  # OK in this instance.
   verifier_b64 = base64.urlsafe_b64encode(verifier.to_bytes(32, byteorder='big'))
   __logger.debug('b64 verifier: {}'.format(verifier_b64))
   verifier_b64_str = verifier_b64.decode().replace('=','')
@@ -68,6 +86,8 @@ def main():
   ########################################
   # Generate Code Challenge
   ########################################
+  # Using the URL-safe Base64 version of verifier, with the '=' still on the
+  # end
   challenge = hashlib.sha256(verifier_b64).digest()
   __logger.debug('raw challenge: {}'.format(challenge))
   challenge_b64 = base64.urlsafe_b64encode(challenge)
@@ -100,9 +120,9 @@ def main():
     'challenge': challenge_b64.decode()
   }
 # XXX: Locking?
-  authstate_fd = open("fd-api-authstate.json", mode="w")
-  json.dump(auth_state, authstate_fd, indent=2)
-  authstate_fd.close()
+  authstate_fp = open("fd-api-authstate.json", mode="w")
+  json.dump(auth_state, authstate_fp, indent=2)
+  authstate_fp.close()
   ########################################
 
   ########################################
