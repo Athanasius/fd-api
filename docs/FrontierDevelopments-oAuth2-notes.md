@@ -46,7 +46,7 @@ to copy and paste it into a browser, or perhaps you can invoke a browser
 with it.
   This URL should be of the form:
 
-<https://auth.frontierstore.net/auth?audience=frontier&scope=capi&response_type=code&client_id=YOUR_APPROVED_CLIENTID&code_challenge=CODE_CHALLENGE&code_challenge_method=S256&state=STATESTRING&redirect_uri=REDIRECT_URI>
+	<https://auth.frontierstore.net/auth?audience=frontier&scope=capi&response_type=code&client_id=YOUR_APPROVED_CLIENTID&code_challenge=CODE_CHALLENGE&code_challenge_method=S256&state=STATESTRING&redirect_uri=REDIRECT_URI>
 
   Obviously you need to replace the requisite parts of this:
 
