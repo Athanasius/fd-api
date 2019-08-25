@@ -1,33 +1,17 @@
-=Introduction=
-  Since early 2019 Frontier Developments switched authorisation for
-their CAPI (Companion API)[0] service from plain username+password to an
-oAuth2 scheme.
-  Before a developer can make any use of this they must first apply for
-access.
+Introduction
+============
 
- 1. Navigate a web browser to <https://user.frontierstore.net/> and
- *apply* for access (I can't more fully document this because I long
- since went through the process and only have one applicable account).
+  Since early 2019 Frontier Developments switched authorisation for their CAPI (Companion API)[0] service from plain username+password to an oAuth2 scheme.
+  Before a developer can make any use of this they must first apply for access.
 
- 2. Once Frontier have *approved* your access (it will _not_ be
- instant), navigate back to <https://user.frontierstore.net/> to review
- the available information.  You should default to the 'User
- Information' view which shows:
-
+ 1. Navigate a web browser to <https://user.frontierstore.net/> and *apply* for access (I can't more fully document this because I long since went through the process and only have one applicable account).
+ 1. Once Frontier have *approved* your access (it will _not_ be instant), navigate back to <https://user.frontierstore.net/> to review the available information.  You should default to the 'User Information' view which shows:
   a. Frontier ID - your unique ID for this system
   b. Name - The real name specified in your account
   c. Email - The email address associated with your account
-  d. Platform - Whether this is a Frontier account, XBox, Playstation or
-  Steam.
-
-  The 'Authorized Applications' lists all the applications you've
-  authorised to request data on your behalf.  This might include sites
-  like Inara.Cz.
-
- 3. The 'Developer Zone' is where you'll see your authorised application
- once access is granted.  You will probably have 'AUTH' and 'CAPI'
- scopes.  Clicking 'View' on this will reveal your Client ID and Shared
- Key.  You can also 'Regenerate key' here if you ever need to.
+  d. Platform - Whether this is a Frontier account, XBox, Playstation or Steam.
+     The 'Authorized Applications' lists all the applications you've authorised to request data on your behalf.  This might include sites like Inara.Cz.  
+ 3. The 'Developer Zone' is where you'll see your authorised application once access is granted.  You will probably have 'AUTH' and 'CAPI' scopes.  Clicking 'View' on this will reveal your Client ID and Shared Key.  You can also 'Regenerate key' here if you ever need to.  
 
   There is also a link to <https://user.frontierstore.net/developer/docs>,
  the developer documentation.  If you are wanting to use CAPI with a
@@ -43,7 +27,8 @@ that application is long since dead (not working on many subsequent iOS
 revisions), enough developers figured out the API and started making use
 of it that Frontier Developments decided to continue supporting it.
 
-== PKCE ==
+PKCE
+----
 
   If your application does not run in a web browser than you'll want to
 use PKCE for the authentication flow.
