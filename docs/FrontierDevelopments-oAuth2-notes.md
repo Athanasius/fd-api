@@ -95,7 +95,7 @@ specified.
 
 		<https://auth.frontierstore.net/token>
 
-  You need to set a header:
+7. You need to set a header:
 
 		Content-Type: application/x-www-form-urlencoded
 
