@@ -14,7 +14,7 @@ import requests
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-import ed_capi
+import edcapi
 
 ###########################################################################
 """
@@ -80,7 +80,7 @@ def main():
   ####
   # Retrieve state
   ####
-  db = ed_capi.database(__config.get('db_sqlite_file'), __logger)
+  db = edcapi.database(__config.get('db_sqlite_file'), __logger)
   if not db:
     __logger.error('Failed to open auth state database')
   auth_state = db.getAuthState(state_recv)

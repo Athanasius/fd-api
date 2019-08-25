@@ -9,7 +9,7 @@ import argparse
 import random, base64, hashlib
 import json
 
-import ed_capi
+import edcapi
 
 ###########################################################################
 """
@@ -57,7 +57,7 @@ def main():
   ########################################
   # Retrieve and test state
   ########################################
-  db = ed_capi.database(__config.get('db_sqlite_file'), __logger)
+  db = edcapi.database(__config.get('db_sqlite_file'), __logger)
   auth_state = db.getActiveTokenState()
   if auth_state:
 	  ## Do we have an access_token, and does it work?
