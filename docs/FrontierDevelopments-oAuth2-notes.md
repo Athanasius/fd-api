@@ -40,19 +40,19 @@ to copy and paste it into a browser, or perhaps you can invoke a browser
 with it.
   This URL should be of the form:
 
-	https://auth.frontierstore.net/auth?audience=frontier&scope=capi&response_type=code&client_id=YOUR_APPROVED_CLIENTID&code_challenge=CODE_CHALLENGE&code_challenge_method=S256&state=STATESTRING&redirect_uri=REDIRECT_URI
+<https://auth.frontierstore.net/auth?audience=frontier&scope=capi&response_type=code&client_id=YOUR_APPROVED_CLIENTID&code_challenge=CODE_CHALLENGE&code_challenge_method=S256&state=STATESTRING&redirect_uri=REDIRECT_URI>
 
   Obviously you need to replace the requisite parts of this:
 
-   1. YOUR_APPROVED_CLIENTID is your 'ClientID' from the Frontier
+1. YOUR_APPROVED_CLIENTID is your 'ClientID' from the Frontier
     'Developer Zone' for your application.
-   2. CODE_CHALLENGE needs to be generated from a CODE_VERIFIER.
+2. CODE_CHALLENGE needs to be generated from a CODE_VERIFIER.
 
 	1. Generate 32 bytes (octets) of random data, as securely as you can.
 	2. Now Base64 encode this, in a URL safe version (replace '+' with
       '-', and '/' with '_', but the '=' on the end can stay).
 
-    This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
+ This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
 
 	1. Create a, binary not hex representation, sha256 hash of
       CODE_VERIFIER.
@@ -61,9 +61,9 @@ with it.
 	3. Make sure you have a string representation of this (not, e.g.
       python bytes).
 
-   3. STATESTRING should be generated similarly to CODE_VERIFIER, and
+3. STATESTRING should be generated similarly to CODE_VERIFIER, and
     as with CODE_CHALLENGE ensure it's in a string representation.
-   4. REDIRECT_URI is how your app receives back the CODE from
+4. REDIRECT_URI is how your app receives back the CODE from
     Frontier's auth servers.  If you do have a web server available then
     set up a receiving script there.  If operating on a mobile device
     you probably want to register a custom URL handler and point to
@@ -84,11 +84,11 @@ PKCE you do *NOT* want to send a query to this URL yourself.
 receive a code back as a GET parameter at the REDIRECT_URI you
 specified.
 
-   5. In the REDIRECT_URL handler check the received STATE matches what
+5. In the REDIRECT_URL handler check the received STATE matches what
     you originally sent in order to verify you're in sync with the auth
     server.
 
-   6. Now you need to craft a new https request, which this time you *are*
+6. Now you need to craft a new https request, which this time you *are*
     going to use yourself.  Note you need to use a POST request, not
     GET.
 
