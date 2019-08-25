@@ -52,7 +52,7 @@ with it.
 	2. Now Base64 encode this, in a URL safe version (replace '+' with
       '-', and '/' with '_', but the '=' on the end can stay).
 
-2. This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
+3. This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
 
 	1. Create a, binary not hex representation, sha256 hash of
       CODE_VERIFIER.
@@ -61,9 +61,9 @@ with it.
 	3. Make sure you have a string representation of this (not, e.g.
       python bytes).
 
-3. STATESTRING should be generated similarly to CODE_VERIFIER, and
+4. STATESTRING should be generated similarly to CODE_VERIFIER, and
     as with CODE_CHALLENGE ensure it's in a string representation.
-4. REDIRECT_URI is how your app receives back the CODE from
+5. REDIRECT_URI is how your app receives back the CODE from
     Frontier's auth servers.  If you do have a web server available then
     set up a receiving script there.  If operating on a mobile device
     you probably want to register a custom URL handler and point to
@@ -85,11 +85,11 @@ PKCE you do *NOT* want to send a query to this URL yourself.
 receive a code back as a GET parameter at the REDIRECT_URI you
 specified.
 
-5. In the REDIRECT_URL handler check the received STATE matches what
+6. In the REDIRECT_URL handler check the received STATE matches what
     you originally sent in order to verify you're in sync with the auth
     server.
 
-6. Now you need to craft a new https request, which this time you *are*
+7. Now you need to craft a new https request, which this time you *are*
     going to use yourself.  Note you need to use a POST request, not
     GET.
 
