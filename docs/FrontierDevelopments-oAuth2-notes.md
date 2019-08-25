@@ -101,12 +101,14 @@ specified.
 
 	1. The URL is:
 
-		https://auth.frontierstore.net/token
+			https://auth.frontierstore.net/token
 
  	2. You need to set a header:
+
 		Content-Type: application/x-www-form-urlencoded
 
 	3. And the data in the body will be a string:
+
 		redirect_uri=REDIRECT_URI&code=CODE&grant_type=authorization_code&code_verifier=CODE_VERIFIER&client_id=CLIENTID
 
 		1. REDIRECT_URI - again a web script to receive the response.  You
