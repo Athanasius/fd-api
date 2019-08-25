@@ -1,6 +1,8 @@
 import apsw
 from apsw import SQLITE_OPEN_READWRITE as SQLITE_OPEN_READWRITE
 
+import datetime
+
 ###########################################################################
 # Our base class for database operations
 ###########################################################################
@@ -21,6 +23,31 @@ class database(object):
   def storeNewState(self, state, challenge, verifier):
     self.__logger.debug("storeNewState: state='{}', challenge='{}', verifier='{}'".format(state, challenge, verifier))
     self.__cursor.execute("INSERT INTO auth (state,challenge,verifier) VALUES(:state,:challenge,:verifier)", {"state":state, "challenge":challenge, "verifier":verifier})
+  #########################################################################
+
+  #########################################################################
+  # Update an existing state-identified row with:
+  #
+  #   access_token
+  #   refresh_token
+  #   expires_in - This will be in seconds from 'now'(ish), so needs
+  #                conversion
+  #########################################################################
+  def updateWithAccessToken(self, state, access_token, refresh_token, expires_in):
+    self.__logger.debug("state='{}', access_token='{}', refresh_token='{}', expires_in='{}'".format(state, access_token, refresh_token, expires_in))
+    now = datetime.datetime.now()
+    # Fudge factor of 10 seconds in case processing took a while
+    expires_dt = now + datetime.timedelta(0, expires_in - 10)
+    expires = str(expires_dt)
+    self.__cursor.execute(
+      "UPDATE auth SET access_token = :access_token, refresh_token = :refresh_token, expires = :expires WHERE state = :state",
+      {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "expires": expires,
+        "state": state
+      }
+    )
   #########################################################################
 
   #########################################################################
