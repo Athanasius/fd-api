@@ -46,7 +46,7 @@ to copy and paste it into a browser, or perhaps you can invoke a browser
 with it.
   This URL should be of the form:
 
-	<https://auth.frontierstore.net/auth?audience=frontier&scope=capi&response_type=code&client_id=YOUR_APPROVED_CLIENTID&code_challenge=CODE_CHALLENGE&code_challenge_method=S256&state=STATESTRING&redirect_uri=REDIRECT_URI>
+	https://auth.frontierstore.net/auth?audience=frontier&scope=capi&response_type=code&client_id=YOUR_APPROVED_CLIENTID&code_challenge=CODE_CHALLENGE&code_challenge_method=S256&state=STATESTRING&redirect_uri=REDIRECT_URI
 
   Obviously you need to replace the requisite parts of this:
 
@@ -99,14 +99,13 @@ specified.
     going to use yourself.  Note you need to use a POST request, not
     GET.
 
-	1. The URL is: <https://auth.frontierstore.net/token>
+	1. The URL is:
+		https://auth.frontierstore.net/token
 
  	2. You need to set a header:
-
 		Content-Type: application/x-www-form-urlencoded
 
 	3. And the data in the body will be a string:
-
 		redirect_uri=REDIRECT_URI&code=CODE&grant_type=authorization_code&code_verifier=CODE_VERIFIER&client_id=CLIENTID
 
 		1. REDIRECT_URI - again a web script to receive the response.  You
