@@ -100,6 +100,7 @@ specified.
     GET.
 
 	1. The URL is:
+
 		https://auth.frontierstore.net/token
 
  	2. You need to set a header:
