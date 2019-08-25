@@ -48,17 +48,17 @@ with it.
     'Developer Zone' for your application.
    2. CODE_CHALLENGE needs to be generated from a CODE_VERIFIER.
 
-     a. Generate 32 bytes (octets) of random data, as securely as you can.
-     b. Now Base64 encode this, in a URL safe version (replace '+' with
+	1. Generate 32 bytes (octets) of random data, as securely as you can.
+	2. Now Base64 encode this, in a URL safe version (replace '+' with
       '-', and '/' with '_', but the '=' on the end can stay).
 
     This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
 
-     a. Create a, binary not hex representation, sha256 hash of
+	1. Create a, binary not hex representation, sha256 hash of
       CODE_VERIFIER.
-     b. Again, Base64 encode this in a URL safe manner.  You WILL need
+	2. Again, Base64 encode this in a URL safe manner.  You WILL need
      to strip the trailing '=' off it this time.
-     c. Make sure you have a string representation of this (not, e.g.
+	3. Make sure you have a string representation of this (not, e.g.
       python bytes).
 
    3. STATESTRING should be generated similarly to CODE_VERIFIER, and
