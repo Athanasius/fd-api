@@ -15,10 +15,12 @@ Introduction
 once access is granted.  You will probably have 'AUTH' and 'CAPI' scopes.
 Clicking 'View' on this will reveal your Client ID and Shared Key.
 You can also 'Regenerate key' here if you ever need to.
+
  There is also a link to <https://user.frontierstore.net/developer/docs>,
 the developer documentation.  If you are wanting to use CAPI with a
 standalone application, rather than a web-based application you will
 need to follow the PKCE documentation.
+
  I found <https://www.oauth.com/oauth2-servers/pkce/> more useful
 though.
   
