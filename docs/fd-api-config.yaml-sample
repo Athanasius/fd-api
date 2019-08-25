@@ -6,3 +6,5 @@ clientid: "CLIENTID"
 shared_key: "SHAREDKEY"
 # Your WWW/local protocol script to receive responses from Frontier
 redirect_uri: "REDIRECT_URI"
+# A writeable location for the sqlite3 database
+db_sqlite_file: "/FULL/PATH/TO/fd-api-auth.sql"
