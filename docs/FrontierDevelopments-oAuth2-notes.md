@@ -93,34 +93,34 @@ specified.
     going to use yourself.  Note you need to use a POST request, not
     GET.
 
-		<https://auth.frontierstore.net/token>
+	1. The URL is: <https://auth.frontierstore.net/token>
 
-7. You need to set a header:
+ 	2. You need to set a header:
 
 		Content-Type: application/x-www-form-urlencoded
 
-  And the data in the body will be a string:
+	3. And the data in the body will be a string:
 
 		redirect_uri=REDIRECT_URI&code=CODE&grant_type=authorization_code&code_verifier=CODE_VERIFIER&client_id=CLIENTID
 
-	1. REDIRECT_URI - again a web script to receive the response.  You
+		1. REDIRECT_URI - again a web script to receive the response.  You
        can re-use the same one if you're clever.  This does need to be
        URL-Encoded (%XX versions of ':' and '/' at least).
 
-	2. CODE - The value you received back as a 'code=XXX' GET
+		2. CODE - The value you received back as a 'code=XXX' GET
        parameter in the REDIRECT_URI script.
 
-	3. CODE_VERIFIER - The URL-Safe Base64 version of your VERIFIER,
+		3. CODE_VERIFIER - The URL-Safe Base64 version of your VERIFIER,
        *with* the trailing '='.
 
-	4. CLIENTID - Your Application's CLIENTID.
+		4. CLIENTID - Your Application's CLIENTID.
 
-    Make this request and if it's all worked you'll get a 200 response,
-    with the body being a JSON object containing the tokens.  If you
-    did something wrong, or took too long, you'll likely get a 401
-    response.
+8. Make this request and if it's all worked you'll get a 200 response,
+with the body being a JSON object containing the tokens.  If you
+did something wrong, or took too long, you'll likely get a 401
+response.
 
-    The JSON will contain a few keys and their values:
+The JSON will contain a few keys and their values:
 
 	1. access_token - the token to be used on CAPI endpoint requests
 
