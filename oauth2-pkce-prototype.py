@@ -9,6 +9,8 @@ import argparse
 import random, base64, hashlib
 import json
 
+import ed_capi
+
 ###########################################################################
 """
  "  Configuration
@@ -55,18 +57,18 @@ def main():
   ########################################
   # Retrieve and test state
   ########################################
-  try:
-    authstate_fp = open("fd-api-authstate.json", mode="r")
-    auth_state = json.load(authstate_fp)
-    authstate_fp.close()
-    print(auth_state)
+  db = ed_capi.database(__config.get('db_sqlite_file'), __logger)
+  auth_state = db.getActiveTokenState()
+  if auth_state:
 	  ## Do we have an access_token, and does it work?
-    if 'access_token' in auth_state:
-      print("Found access_token, assuming it's good")
+    if auth_state['access_token']:
+      print("Found un-expired access_token, assuming it's good.")
       return(0)
-    print("No 'access_token in 'authstate', continuing...")
-  except FileNotFoundError as e:
-    print("No 'fd-api-authstate.json', continuing...")
+    else:
+      print("Un-expired access_token, but no access_token? WTF!")
+      return(-1)
+  else:
+    print("No auth state with un-expired access_token found, continuing...")
   ########################################
 
   ########################################
@@ -114,15 +116,7 @@ def main():
   ########################################
   # Store state and the codes for when redirect_uri is called
   ########################################
-  auth_state = {
-    'state': state_b64_str,
-    'verifier': verifier_b64.decode(),
-    'challenge': challenge_b64.decode()
-  }
-# XXX: Locking?
-  authstate_fp = open("fd-api-authstate.json", mode="w")
-  json.dump(auth_state, authstate_fp, indent=2)
-  authstate_fp.close()
+  db.storeNewState(state_b64_str, challenge_b64.decode(), verifier_b64.decode())
   ########################################
 
   ########################################
