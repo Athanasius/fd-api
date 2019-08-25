@@ -1,0 +1,8 @@
+# The base URL for all of Frontier's oAuth2 implementation
+auth_api_url: "https://auth.frontierstore.net"
+# Your Client ID from https://user.frontierstore.net/ -> 'Developer Zone'
+clientid: "CLIENTID"
+# Your Shared key from https://user.frontierstore.net/ -> 'Developer Zone'
+shared_key: "SHAREDKEY"
+# Your WWW/local protocol script to receive responses from Frontier
+redirect_uri: "REDIRECT_URI"
