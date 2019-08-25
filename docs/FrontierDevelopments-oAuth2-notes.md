@@ -95,13 +95,13 @@ specified.
 
  <https://auth.frontierstore.net/token>
 
- You need to set a header:
+   You need to set a header:
 
-  Content-Type: application/x-www-form-urlencoded
+	Content-Type: application/x-www-form-urlencoded
 
- And the data in the body will be a string:
+   And the data in the body will be a string:
 
-  redirect_uri=REDIRECT_URI&code=CODE&grant_type=authorization_code&code_verifier=CODE_VERIFIER&client_id=CLIENTID
+	redirect_uri=REDIRECT_URI&code=CODE&grant_type=authorization_code&code_verifier=CODE_VERIFIER&client_id=CLIENTID
 
 	1. REDIRECT_URI - again a web script to receive the response.  You
        can re-use the same one if you're clever.  This does need to be
