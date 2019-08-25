@@ -5,11 +5,11 @@ Introduction
   Before a developer can make any use of this they must first apply for access.
 
 1. Navigate a web browser to <https://user.frontierstore.net/> and *apply* for access (I can't more fully document this because I long since went through the process and only have one applicable account).
-1. Once Frontier have *approved* your access (it will _not_ be instant), navigate back to <https://user.frontierstore.net/> to review the available information.  You should default to the 'User Information' view which shows: a. Frontier ID - your unique ID for this system
+2. Once Frontier have *approved* your access (it will _not_ be instant), navigate back to <https://user.frontierstore.net/> to review the available information.  You should default to the 'User Information' view which shows: a. Frontier ID - your unique ID for this system
  1. Name - The real name specified in your account
- 1. Email - The email address associated with your account
- 1. Platform - Whether this is a Frontier account, XBox, Playstation or Steam.  The 'Authorized Applications' lists all the applications you've authorised to request data on your behalf.  This might include sites like Inara.Cz.  
-1. The 'Developer Zone' is where you'll see your authorised application once access is granted.  You will probably have 'AUTH' and 'CAPI' scopes.  Clicking 'View' on this will reveal your Client ID and Shared Key.  You can also 'Regenerate key' here if you ever need to.  
+ 2. Email - The email address associated with your account
+ 3. Platform - Whether this is a Frontier account, XBox, Playstation or Steam.  The 'Authorized Applications' lists all the applications you've authorised to request data on your behalf.  This might include sites like Inara.Cz.  
+3. The 'Developer Zone' is where you'll see your authorised application once access is granted.  You will probably have 'AUTH' and 'CAPI' scopes.  Clicking 'View' on this will reveal your Client ID and Shared Key.  You can also 'Regenerate key' here if you ever need to.  
 
   There is also a link to <https://user.frontierstore.net/developer/docs>,
  the developer documentation.  If you are wanting to use CAPI with a
