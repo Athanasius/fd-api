@@ -47,32 +47,27 @@ with it.
    1. YOUR_APPROVED_CLIENTID is your 'ClientID' from the Frontier
     'Developer Zone' for your application.
    2. CODE_CHALLENGE needs to be generated from a CODE_VERIFIER.
-
 	1. Generate 32 bytes (octets) of random data, as securely as you can.
 	2. Now Base64 encode this, in a URL safe version (replace '+' with
       '-', and '/' with '_', but the '=' on the end can stay).
-
     This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
-
 	1. Create a, binary not hex representation, sha256 hash of
       CODE_VERIFIER.
 	2. Again, Base64 encode this in a URL safe manner.  You WILL need
      to strip the trailing '=' off it this time.
 	3. Make sure you have a string representation of this (not, e.g.
       python bytes).
-
    3. STATESTRING should be generated similarly to CODE_VERIFIER, and
     as with CODE_CHALLENGE ensure it's in a string representation.
-
    4. REDIRECT_URI is how your app receives back the CODE from
     Frontier's auth servers.  If you do have a web server available then
     set up a receiving script there.  If operating on a mobile device
     you probably want to register a custom URL handler and point to
     that.  Just so long as:
 
-      a. The web browser on the device understands and can reach this
+	1. The web browser on the device understands and can reach this
        URL.
-      b. You can then get the received CODE back into your application.
+	2. You can then get the received CODE back into your application.
 
   Also note that I chose an 'audience' of 'frontier' (PC non-steam
 account), and a scope of 'capi' (in order to use the CAPI).
