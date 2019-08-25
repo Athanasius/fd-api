@@ -14,6 +14,8 @@ import requests
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
+import ed_capi
+
 ###########################################################################
 """
  "  Configuration
@@ -28,7 +30,7 @@ __config = yaml.load(__configfile, Loader=yaml.CLoader)
 # Logging
 ###########################################################################
 os.environ['TZ'] = 'UTC'
-__default_loglevel = logging.INFO
+__default_loglevel = logging.DEBUG
 __logger = logging.getLogger('fd-api')
 __logger.setLevel(__default_loglevel)
 __logger_ch = logging.StreamHandler()
@@ -50,7 +52,7 @@ __logger.addHandler(__logger_ch)
 #  __level = getattr(logging, __args.loglevel.upper())
 #  __logger.setLevel(__level)
 #  __logger_ch.setLevel(__level)
-__logger.setLevel(getattr(logging, 'DEBUG'))
+##__logger_ch.setLevel(getattr(logging, 'DEBUG'))
 ###########################################################################
 
 ###########################################################################
@@ -61,15 +63,6 @@ def main():
 
   print('Content-Type: text/plain')
   print()
-  ########################################
-  # Retrieve state
-  ########################################
-  authstate_fp = open("fd-api-authstate.json", mode="r")
-  auth_state = json.load(authstate_fp)
-  authstate_fp.close()
-  print(auth_state)
-  ########################################
-
   ########################################
   # Check the received code
   ########################################
@@ -84,12 +77,23 @@ def main():
     __logger.error("No 'state' received")
     return(-1)
   state_recv = getparams['state'].value
-  if state_recv != auth_state['state']:
+  ####
+  # Retrieve state
+  ####
+  db = ed_capi.database(__config.get('db_sqlite_file'), __logger)
+  if not db:
+    __logger.error('Failed to open auth state database')
+  auth_state = db.getAuthState(state_recv)
+  print('Auth State from db:\n{}'.format(auth_state))
+  ####
+
+  if auth_state and state_recv != auth_state['state']:
     __logger.error("Received state doesn't match the stored one")
     return(-2)
   __logger.info("Auth Code: '{}'".format(auth_code))
   __logger.info("Received State: '{}'".format(state_recv))
   ########################################
+
 
   ########################################
   # Make a Token Request
