@@ -52,7 +52,7 @@ with it.
 	2. Now Base64 encode this, in a URL safe version (replace '+' with
       '-', and '/' with '_', but the '=' on the end can stay).
 
- This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
+2. This is your CODE_VERIFIER.  Now we generate the CODE_CHALLENGE:
 
 	1. Create a, binary not hex representation, sha256 hash of
       CODE_VERIFIER.
@@ -73,9 +73,10 @@ with it.
        URL.
 	2. You can then get the received CODE back into your application.
 
-  Also note that I chose an 'audience' of 'frontier' (PC non-steam
+Also note that I chose an 'audience' of 'frontier' (PC non-steam
 account), and a scope of 'capi' (in order to use the CAPI).
-  Now that you have crafted the initial URL, give it to the user.
+
+Now that you have crafted the initial URL, give it to the user.
 They'll be asked to login on Frontier's server (if needs be) and then
 approve your application's requested access.  The key thing is that with
 PKCE you do *NOT* want to send a query to this URL yourself.
@@ -92,24 +93,27 @@ specified.
     going to use yourself.  Note you need to use a POST request, not
     GET.
 
-	<https://auth.frontierstore.net/token>
+ <https://auth.frontierstore.net/token>
 
-    You need to set a header:
+ You need to set a header:
 
-    	Content-Type: application/x-www-form-urlencoded
+  Content-Type: application/x-www-form-urlencoded
 
-    And the data in the body will be a string:
+ And the data in the body will be a string:
 
-    	redirect_uri=REDIRECT_URI&code=CODE&grant_type=authorization_code&code_verifier=CODE_VERIFIER&client_id=CLIENTID
+  redirect_uri=REDIRECT_URI&code=CODE&grant_type=authorization_code&code_verifier=CODE_VERIFIER&client_id=CLIENTID
 
-      a. REDIRECT_URI - again a web script to receive the response.  You
+	1. REDIRECT_URI - again a web script to receive the response.  You
        can re-use the same one if you're clever.  This does need to be
        URL-Encoded (%XX versions of ':' and '/' at least).
-      b. CODE - The value you received back as a 'code=XXX' GET
+
+	2. CODE - The value you received back as a 'code=XXX' GET
        parameter in the REDIRECT_URI script.
-      c. CODE_VERIFIER - The URL-Safe Base64 version of your VERIFIER,
+
+	3. CODE_VERIFIER - The URL-Safe Base64 version of your VERIFIER,
        *with* the trailing '='.
-      d. CLIENTID - Your Application's CLIENTID.
+
+	4. CLIENTID - Your Application's CLIENTID.
 
     Make this request and if it's all worked you'll get a 200 response,
     with the body being a JSON object containing the tokens.  If you
@@ -118,9 +122,12 @@ specified.
 
     The JSON will contain a few keys and their values:
 
-      a. access_token - the token to be used on CAPI endpoint requests
-      b. refresh_token - the token that can be used to get a new
+	1. access_token - the token to be used on CAPI endpoint requests
+
+	2. refresh_token - the token that can be used to get a new
        access_token if the latter has expired, assuming this token hasn't
        also expired.
-      c. token_type - "Bearer"
-      d. expires_in - Seconds(?) until the (which?) token expires. 
+
+	3. token_type - "Bearer"
+
+	4. expires_in - Seconds(?) until the (which?) token expires. 
