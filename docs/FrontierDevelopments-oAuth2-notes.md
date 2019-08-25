@@ -119,9 +119,7 @@ specified.
 with the body being a JSON object containing the tokens.  If you
 did something wrong, or took too long, you'll likely get a 401
 response.
-
 The JSON will contain a few keys and their values:
-
 	1. access_token - the token to be used on CAPI endpoint requests
 
 	2. refresh_token - the token that can be used to get a new
