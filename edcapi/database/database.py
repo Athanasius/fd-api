@@ -84,7 +84,7 @@ class database(object):
           row
         )
       )
-      self.__logger.debug('getActiveTokenState: Returning auth_state = \n{}'.format(auth_state))
+      #self.__logger.debug('getActiveTokenState: Returning auth_state = \n{}'.format(auth_state))
       return auth_state
     else:
       self.__logger.debug('getActiveTokenState: Un-expired access_token found')
@@ -109,4 +109,10 @@ class database(object):
     return None
   #########################################################################
 
+  #########################################################################
+  # Update when an Access Token was last successfully used
+  #########################################################################
+  def updateLastSuccessfulUse(self, cmdrname, access_token):
+    self.__cursor.execute("UPDATE auth SET last_success = datetime() WHERE cmdr_name = :cmdrname AND access_token = :access_token", {"cmdrname":cmdrname, "access_token":access_token})
+  #########################################################################
 ###########################################################################
