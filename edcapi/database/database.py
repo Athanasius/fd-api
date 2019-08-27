@@ -51,6 +51,21 @@ class database(object):
   #########################################################################
 
   #########################################################################
+  # Update an existing state, identified by Access Token, with
+  # account information
+  #########################################################################
+  def updateWithCustomerID(self, access_token, customer_id):
+    self.__logger.debug("access_token='{}', customer_id='{}'".format(access_token, customer_id))
+    self.__cursor.execute(
+      "UPDATE auth SET customer_id = :customer_id WHERE access_token = :access_token",
+      {
+        "access_token": access_token,
+        "customer_id": customer_id
+      }
+    )
+  #########################################################################
+
+  #########################################################################
   # Get the entire state of an active access_token
   #########################################################################
   def getActiveTokenState(self):

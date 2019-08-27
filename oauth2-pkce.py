@@ -232,6 +232,22 @@ def handleCGI():
   )
   ########################################
 
+  ########################################
+  # Retrieve /decode so we know who this Access Token is for
+  ########################################
+  uri = __config.get('auth_api_url') + '/decode'
+  session = requests.Session()
+  session.headers.update(
+    {
+      "Authorization": "Bearer " + tokens["access_token"],
+      "Content-Type": "application/json"
+    }
+  )
+  response = session.get(uri)
+  decode = json.loads(response.text)
+  print(response.text)
+  db.updateWithCustomerID(tokens['access_token'], decode['usr']['customer_id'])
+  ########################################
 ###########################################################################
 
 if __name__ == '__main__':
