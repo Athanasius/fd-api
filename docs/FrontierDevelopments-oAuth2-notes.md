@@ -162,16 +162,15 @@ The JSON will contain a few keys and their values:
 ### Summary
 
 1. Generate a VERIFIER.  You'll then generate a CHALLENGE from this,
-sent in the initial request to the Auth Server.  You then send the
-VERIFIER in the subsequent tokens request to prove it was you who made
+sent in the Authorization Request.  You will later send the
+VERIFIER in the subsequent Token Request to prove it was you who made
 the initial request.
 
-2. Generate the initial User Authorization Request, which will ask the
-user to authorize your application's access to your account.
+2. Generate the initial Authorization Request, which will ask the user
+to authorize your application's access to your account.
 
 3. Success will cause the browser to go to the specified Redirect URI,
 with a CODE and the STATUS you specified passed as GET parameters.
 
-4. You then send Token Request to the Auth Server, including your
-VERIFIER, Client ID, and the CODE you just got to ask for the Access
-and Refresh Tokens.
+4. You then send a Token Request, including your VERIFIER, Client ID,
+and the CODE you just got to ask for the Access and Refresh Tokens.
