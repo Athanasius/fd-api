@@ -2,12 +2,18 @@
 # vim: textwidth=0 wrapmargin=0 tabstop=2 shiftwidth=2 softtabstop smartindent
 
 import os
-import yaml
-import logging
-import argparse
+import yaml, logging, argparse
 
 import random, base64, hashlib
 import json
+import cgi
+#import cgitb
+#cgitb.enable(display=0, logdir="/var/www/user-rw/athan.fysh.org/fd-api-logs")
+
+import urllib.request
+import requests
+import pprint
+pp = pprint.PrettyPrinter(indent=2)
 
 import edcapi
 
@@ -25,7 +31,7 @@ __config = yaml.load(__configfile, Loader=yaml.CLoader)
 # Logging
 ###########################################################################
 os.environ['TZ'] = 'UTC'
-__default_loglevel = logging.INFO
+__default_loglevel = logging.DEBUG
 __logger = logging.getLogger('fd-api')
 __logger.setLevel(__default_loglevel)
 __logger_ch = logging.StreamHandler()
@@ -37,22 +43,33 @@ __logger_ch.setFormatter(__logger_formatter)
 __logger.addHandler(__logger_ch)
 ###########################################################################
 
-###########################################################################
-# Command-Line Arguments
-###########################################################################
-__parser = argparse.ArgumentParser()
-__parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
-__args = __parser.parse_args()
-if __args.loglevel:
-  __level = getattr(logging, __args.loglevel.upper())
-  __logger.setLevel(__level)
-  __logger_ch.setLevel(__level)
-###########################################################################
 
 ###########################################################################
 # MAIN
+###########################################################################
 def main():
   __logger.debug('Start-Up')
+
+  if not os.getenv('GATEWAY_INTERFACE'):
+    handleCLI()
+  else:
+    handleCGI()
+
+###########################################################################
+# Being called from command-line
+###########################################################################
+def handleCLI():
+  #########################################
+  # Command-Line Arguments
+  #########################################
+  __parser = argparse.ArgumentParser()
+  __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
+  __args = __parser.parse_args()
+  if __args.loglevel:
+    __level = getattr(logging, __args.loglevel.upper())
+    __logger.setLevel(__level)
+    __logger_ch.setLevel(__level)
+  #########################################
 
   ########################################
   # Retrieve and test state
@@ -60,7 +77,7 @@ def main():
   db = edcapi.database(__config.get('db_sqlite_file'), __logger)
   auth_state = db.getActiveTokenState()
   if auth_state:
-	  ## Do we have an access_token, and does it work?
+    ## Do we have an access_token, and does it work?
     if auth_state['access_token']:
       print("Found un-expired access_token, assuming it's good.")
       return(0)
@@ -131,7 +148,91 @@ def main():
       '&redirect_uri=' + __config.get('redirect_uri')
   )
   print('Go to the following URL and Authorize the Application:\n\n{}\n'.format(request_uri))
+  return(0)
   ########################################
+###########################################################################
+
+###########################################################################
+# Being called as CGI
+###########################################################################
+def handleCGI():
+  print('Content-Type: text/plain')
+  print()
+  ########################################
+  # Check the received code
+  ########################################
+  getparams = cgi.FieldStorage()
+  #cgi.test()
+  print("getparams:\n{}\n".format(getparams))
+  if 'code' not in getparams:
+    __logger.error("No 'code' received")
+    return(-1)
+  auth_code = getparams['code'].value
+  if 'state' not in getparams:
+    __logger.error("No 'state' received")
+    return(-1)
+  state_recv = getparams['state'].value
+  ####
+  # Retrieve state
+  ####
+  db = edcapi.database(__config.get('db_sqlite_file'), __logger)
+  if not db:
+    __logger.error('Failed to open auth state database')
+  auth_state = db.getAuthState(state_recv)
+  ####
+
+  if auth_state and state_recv != auth_state['state']:
+    __logger.error("Received state doesn't match the stored one")
+    return(-2)
+  __logger.info("Auth Code: '{}'".format(auth_code))
+  __logger.info("Received State: '{}'".format(state_recv))
+  ########################################
+
+
+  ########################################
+  # Make a Token Request
+  ########################################
+  uri = __config.get('auth_api_url') + '/token'
+  data = {
+    'grant_type': 'authorization_code',
+    'code': auth_code,
+    'redirect_uri': __config.get('redirect_uri'),
+    'client_id': __config.get('clientid'),
+    'code_verifier': auth_state['verifier']
+  }
+  req_data = ""
+  for d in data.keys():
+    if d == 'redirect_uri':
+      req_data = req_data + urllib.parse.urlencode({d:data[d]}) + "&"
+    else:
+      req_data = req_data + d + "=" + data.get(d) + "&"
+  req_data = req_data[0:-1]
+  req_data = req_data.encode('ascii')
+  print("req_data:\n{}\n".format(req_data))
+  #return(0)
+  ### import http.client as http_client
+  ### http_client.HTTPConnection.debuglevel = 1
+  ### requests_log = logging.getLogger("requests.packages.urllib3")
+  ### requests_log.setLevel(logging.DEBUG)
+  ### requests_log.propagate = True
+
+  response = requests.post(uri, data=req_data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
+  tokens = json.loads(response.text)
+  print(response.text)
+  ########################################
+
+  ########################################
+  # Update stored data with the access_token, refresh_token and expires
+  ########################################
+  db.updateWithAccessToken(
+    state_recv,
+    tokens['access_token'],
+    tokens['refresh_token'],
+    tokens['expires_in']
+  )
+  ########################################
+
+###########################################################################
 
 if __name__ == '__main__':
       main()
