@@ -80,9 +80,6 @@ def main():
   # OK in this instance.
   verifier_b64 = base64.urlsafe_b64encode(verifier.to_bytes(32, byteorder='big'))
   __logger.debug('b64 verifier: {}'.format(verifier_b64))
-  verifier_b64_str = verifier_b64.decode().replace('=','')
-#.replace('+','-').replace('/','_').replace('=','')
-  __logger.debug('str verifier: {}'.format(verifier_b64_str))
   ########################################
 
   ########################################
