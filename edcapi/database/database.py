@@ -20,9 +20,9 @@ class database(object):
   #########################################################################
   # Store a new state, along with its challenge and verifier
   #########################################################################
-  def storeNewState(self, state, challenge, verifier):
-    self.__logger.debug("storeNewState: state='{}', challenge='{}', verifier='{}'".format(state, challenge, verifier))
-    self.__cursor.execute("INSERT INTO auth (state,challenge,verifier) VALUES(:state,:challenge,:verifier)", {"state":state, "challenge":challenge, "verifier":verifier})
+  def storeNewState(self, state, challenge, verifier, cmdrname=None):
+    self.__logger.debug("storeNewState: state='{}', challenge='{}', verifier='{}', cmdrname='{}'".format(state, challenge, verifier, cmdrname))
+    self.__cursor.execute("INSERT INTO auth (state, challenge, verifier, cmdr_name) VALUES(:state, :challenge, :verifier, :cmdr_name)", {"state":state, "challenge":challenge, "verifier":verifier, "cmdr_name":cmdrname})
   #########################################################################
 
   #########################################################################
@@ -68,9 +68,12 @@ class database(object):
   #########################################################################
   # Get the entire state of an active access_token
   #########################################################################
-  def getActiveTokenState(self):
-    self.__logger.debug('getActiveTokenState:')
-    self.__cursor.execute("SELECT * FROM auth WHERE expires > datetime() ORDER BY id DESC LIMIT 1")
+  def getActiveTokenState(self, cmdrname=None):
+    self.__logger.debug("getActiveTokenState: cmdrname='{}'".format(cmdrname))
+    if cmdrname:
+      self.__cursor.execute("SELECT * FROM auth WHERE cmdr_name = :cmdrname AND expires > datetime() ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
+    else:
+      self.__cursor.execute("SELECT * FROM auth WHERE expires > datetime() ORDER BY id DESC LIMIT 1")
     row = self.__cursor.fetchone()
     if row:
       desc = self.__cursor.getdescription()

@@ -64,18 +64,22 @@ def handleCLI():
   #########################################
   __parser = argparse.ArgumentParser()
   __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
+  __parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
   __args = __parser.parse_args()
+  cmdrName = __args.cmdrname[0]
   if __args.loglevel:
     __level = getattr(logging, __args.loglevel.upper())
     __logger.setLevel(__level)
     __logger_ch.setLevel(__level)
+
   #########################################
 
   ########################################
   # Retrieve and test state
   ########################################
   db = edcapi.database(__config.get('db_sqlite_file'), __logger)
-  auth_state = db.getActiveTokenState()
+  __logger.debug("cmdrName: '{}'".format(cmdrName))
+  auth_state = db.getActiveTokenState(cmdrName)
   if auth_state:
     ## Do we have an access_token, and does it work?
     if auth_state['access_token']:
@@ -130,7 +134,7 @@ def handleCLI():
   ########################################
   # Store state and the codes for when redirect_uri is called
   ########################################
-  db.storeNewState(state_b64_str, challenge_b64.decode(), verifier_b64.decode())
+  db.storeNewState(state_b64_str, challenge_b64.decode(), verifier_b64.decode(), cmdrName)
   ########################################
 
   ########################################
