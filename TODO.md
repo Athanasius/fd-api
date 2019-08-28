@@ -6,6 +6,8 @@
 		1. CAPI journal current
 		1. CAPI journal historic
 1. Implement use of Refresh Token as needed.
+
+		curl -v -d 'grant_type=refresh_token&client_id=CLIENTID&client_secret=SECRETKEY&refresh_token=REFRESH_TOKEN' -H 'Content-Type: application/x-www-form-urlencoded' 'https://auth.frontierstore.net/token'
 	1. Also ensure storing latest Refresh Token (is it a new one on
 	   each API access?).
 1. Implement non-PKCE authorization flow and document it.
