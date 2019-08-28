@@ -220,7 +220,12 @@ def handleCGI():
   ### requests_log.setLevel(logging.DEBUG)
   ### requests_log.propagate = True
 
-  response = requests.post(uri, data=req_data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
+  response = requests.post(uri, data=req_data,
+    headers={
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'User-Agent': __config.get('user_agent')
+    }
+  )
   tokens = json.loads(response.text)
   print(response.text)
   ########################################
@@ -243,6 +248,7 @@ def handleCGI():
   session = requests.Session()
   session.headers.update(
     {
+      'User-Agent': __config.get('user_agent'),
       "Authorization": "Bearer " + tokens["access_token"],
       "Content-Type": "application/json"
     }

@@ -21,6 +21,7 @@ class profile(object):
     uri = self.__config.get('capi_url') + '/profile'
     response = requests.get(uri,
       headers={
+        "User-Agent": self.__config.get('user_agent'),
         "Authorization": "Bearer " + access_token,
         "Content-Type": "application/json"
       }
