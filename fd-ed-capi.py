@@ -97,10 +97,6 @@ def main():
 
     print(pp.pformat(profile))
 
-    # XXX: Need to do something with this that comes back ?
-    # Set-Cookie: access_token=1566841911%7C%7HEXSTRING; domain=companion.orerve.net; path=/; expires=Mon, 26-Aug-2019 17:51:51 UTC; secure
-    #  Looks like a refresh token in there ?
-    #  That first number is a unix epoch timestamp from 24 hours ago.
 ###########################################################################
 if __name__ == '__main__':
   exit(main())
