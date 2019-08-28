@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCS="FrontierDevelopments-oAuth2-notes.md"
+DOCS="FrontierDevelopments-oAuth2-notes.md ../TODO.md"
 for d in ${DOCS};
 do
 	HTMLDOC=$(basename "${d}" .md).html
