@@ -1,3 +1,7 @@
+1. Set a User-Agent of the form:
+
+		EDCD-[A-Za-z]+-[.0-9]+
+
 1. Implement use of Access Token against all available endpoints.
 	1. CAPI profile
 	1. CAPI market
