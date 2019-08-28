@@ -174,3 +174,38 @@ with a CODE and the STATUS you specified passed as GET parameters.
 
 4. You then send a Token Request, including your VERIFIER, Client ID,
 and the CODE you just got to ask for the Access and Refresh Tokens.
+
+## Utilising the Refresh Token
+
+The Access Token will have an expiry time, and when this has been
+reached you will receive HTTP '422 Unprocessable Entity' response from
+the CAPI endpoints.  To get a new Access Token you are not required to
+initiate a new Authorization Request, which would require the user to
+approve your application again.  Instead you can utilise the Refresh
+Token that you got as part of that process.
+
+1. Craft a POST request in order to get a new Access Token.
+	1. This being POST you'll need to include the header
+
+			Content-Type: application/x-www-form-urlencoded
+	1. Then the body of the request will be data comprising of:
+		1. grant_type=refresh_token
+		1. client_id=CLIENTID - Your Application's "Client ID"
+		1. client_secret=SHAREDKEY - Your Application's "Shared
+		   Key"
+		1. refresh_token=REFRESH_TOKEN
+	
+	which all together makes:
+
+			grant_type=refresh_token&client_id=CLIENTID&client_secret=SHAREDKEY&refresh_token=REFRESH_TOKEN
+1. Send this to the token endpoint
+
+	https://auth.frontierstore.net/token
+  If the Refresh Token hasn't also expired (what's the lifetime?) then
+  you'll receive a HTTP 200 response, Content-Type: application/json, with
+  the body being a JSON object containing:
+
+	1. A new Access Token
+	2. A new expires_in time delta (14400 seconds = 4 hours) for
+	   that Access Token
+	3. A new Refresh Token.
