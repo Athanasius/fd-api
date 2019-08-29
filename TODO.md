@@ -18,3 +18,5 @@ a User-Agent of the form:
    entail first merging the oauth2-pkce.py script into the
    org.miggy.edcapi namespace.
 1. Implement non-PKCE authorization flow and document it.
+1. Make sure the user script(s) are as quiet as possible during normal
+   operation.
