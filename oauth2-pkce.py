@@ -15,7 +15,7 @@ import requests
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-import edcapi
+import org.miggy.edcapi
 
 ###########################################################################
 """
@@ -77,7 +77,7 @@ def handleCLI():
   ########################################
   # Retrieve and test state
   ########################################
-  db = edcapi.database(__config.get('db_sqlite_file'), __logger)
+  db = org.miggy.edcapi.database.database(__config.get('db_sqlite_file'), __logger)
   __logger.debug("cmdrName: '{}'".format(cmdrName))
   auth_state = db.getActiveTokenState(cmdrName)
   if auth_state:
@@ -179,7 +179,7 @@ def handleCGI():
   ####
   # Retrieve state
   ####
-  db = edcapi.database(__config.get('db_sqlite_file'), __logger)
+  db = org.miggy.edcapi.database.database(__config.get('db_sqlite_file'), __logger)
   if not db:
     __logger.error('Failed to open auth state database')
   auth_state = db.getAuthState(state_recv)
