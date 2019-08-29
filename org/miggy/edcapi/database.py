@@ -6,13 +6,13 @@ import datetime
 ###########################################################################
 # Our base class for database operations
 ###########################################################################
-class database(object):
+class database:
 
   #########################################################################
   #########################################################################
   def __init__(self, sqlite_file, __logger):
     self.__logger = __logger
-    self.__logger.debug("ed_capi.database: __init__")
+    self.__logger.debug(".")
     self.__db = apsw.Connection(sqlite_file, flags=SQLITE_OPEN_READWRITE)
     self.__cursor = self.__db.cursor()
   #########################################################################

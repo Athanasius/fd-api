@@ -8,7 +8,9 @@ import requests
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-import edcapi
+#from org.miggy import edcapi
+#import org.miggy.edcapi.profile as profile
+import org.miggy.edcapi
 
 ###########################################################################
 """
@@ -82,16 +84,10 @@ def main():
   if not __args.profile:
     __logger.error("You must specify at least one action")
 
-  db = edcapi.database(__config.get('db_sqlite_file'), __logger)
-  auth_state = db.getActiveTokenState(cmdrname)
-  if not auth_state:
-    __logger.error('No un-expired Access Token found for this Commander.  Please run oauth2-pkce.py');
-    return(-1)
+  capi = org.miggy.edcapi.edcapi(__logger, __config)
 
-  __logger.debug('Got an allegedly un-expired Access Token, continuing...')
   if __args.profile:
-    edcapi_profile = edcapi.profile(db, __logger, __config)
-    profile = edcapi_profile.get(cmdrname, auth_state['access_token'])
+    profile = capi.profile.get(cmdrname)
     if not profile:
       return(-1)
 

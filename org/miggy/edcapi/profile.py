@@ -1,5 +1,7 @@
 import requests
 import json
+
+print('org.miggy.edcapi.profile')
 ###########################################################################
 # Our base class for profile operations
 ###########################################################################
@@ -14,7 +16,7 @@ class profile(object):
     self.__config = config
   #########################################################################
 
-  def get(self, cmdrname, access_token):
+  def get(self, cmdrname):
     self.__logger.debug('Start')
 
     # Send request with Access Token
@@ -27,6 +29,7 @@ class profile(object):
       }
     )
     self.__profile = None
+    print(response.status_code)
     if response.status_code == 200:
       self.__profile = json.loads(response.text)
       self.__db.updateLastSuccessfulUse(cmdrname, access_token)
