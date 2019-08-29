@@ -1,6 +1,8 @@
-1. Set a User-Agent of the form:
+1. Figure out a way to have a single request.Session so that we can set
+a User-Agent of the form:
 
 		EDCD-[A-Za-z]+-[.0-9]+
+    without having to remember it on every request.
 
 1. Implement use of Access Token against all available endpoints.
 	1. CAPI profile
