@@ -20,3 +20,5 @@ a User-Agent of the form:
 1. Implement non-PKCE authorization flow and document it.
 1. Make sure the user script(s) are as quiet as possible during normal
    operation.
+1. Update loop-test.sh to use fd-ed-capi.py
+	1. Need to ensure return codes match up
