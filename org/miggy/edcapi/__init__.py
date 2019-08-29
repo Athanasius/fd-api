@@ -14,6 +14,6 @@ class edcapi(object):
     self.__logger.debug(".")
     self.__config = config
 
-    self.__db = database.database(self.__config.get('db_sqlite_file'), self.__logger)
+    self.__db = database.database(self.__logger, self.__config)
     self.profile = profile.profile(self.__db, self.__logger, self.__config)
   #########################################################################

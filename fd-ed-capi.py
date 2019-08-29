@@ -60,7 +60,7 @@ def loadAuthState(cmdr=None):
   ########################################
   # Retrieve and test state
   ########################################
-  db = edcapi.database(__config.get('db_sqlite_file'), __logger)
+  db = edcapi.database(__logger, __config)
   auth_state = db.getActiveTokenState()
   if auth_state:
     ## Do we have an access_token, and does it work?

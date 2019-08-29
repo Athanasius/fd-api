@@ -1,7 +1,6 @@
 import requests
 import json
 
-print('org.miggy.edcapi.profile')
 ###########################################################################
 # Our base class for profile operations
 ###########################################################################
@@ -19,6 +18,11 @@ class profile(object):
   def get(self, cmdrname):
     self.__logger.debug('Start')
 
+    # Get the Access Token
+    access_token = self.__db.getAccessToken(cmdrname)
+    if not access_token:
+      self.__logger.critical("No Access Token, you'll need to auth from scratch again")
+      return None
     # Send request with Access Token
     uri = self.__config.get('capi_url') + '/profile'
     response = requests.get(uri,

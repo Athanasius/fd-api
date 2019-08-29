@@ -2,6 +2,7 @@ import apsw
 from apsw import SQLITE_OPEN_READWRITE as SQLITE_OPEN_READWRITE
 
 import datetime
+import requests, json
 
 ###########################################################################
 # Our base class for database operations
@@ -10,10 +11,11 @@ class database:
 
   #########################################################################
   #########################################################################
-  def __init__(self, sqlite_file, __logger):
-    self.__logger = __logger
+  def __init__(self, logger, config):
+    self.__logger = logger
     self.__logger.debug(".")
-    self.__db = apsw.Connection(sqlite_file, flags=SQLITE_OPEN_READWRITE)
+    self.__config = config
+    self.__db = apsw.Connection(self.__config.get('db_sqlite_file'), flags=SQLITE_OPEN_READWRITE)
     self.__cursor = self.__db.cursor()
   #########################################################################
 
@@ -46,6 +48,26 @@ class database:
         "refresh_token": refresh_token,
         "expires": expires,
         "state": state
+      }
+    )
+  #########################################################################
+
+  #########################################################################
+  # Update with a just refresh Access Token
+  #########################################################################
+  def updateWithRefreshedAccessToken(self, access_token, expires_in, refresh_token_old, refresh_token_new):
+    self.__logger.debug("access_token='{}', expires_in='{}', refresh_token_old='{}', refresh_token_new='{}'".format(access_token, expires_in, refresh_token_old, refresh_token_new))
+    now = datetime.datetime.now()
+    # Fudge factor of 10 seconds in case processing took a while
+    expires_dt = now + datetime.timedelta(0, expires_in - 10)
+    expires = str(expires_dt)
+    self.__cursor.execute(
+      "UPDATE auth SET access_token = :access_token, refresh_token = :refresh_token_new, expires = :expires WHERE refresh_token = :refresh_token_old",
+      {
+        "access_token": access_token,
+        "refresh_token_new": refresh_token_new,
+        "expires": expires,
+        "refresh_token_old": refresh_token_old
       }
     )
   #########################################################################
@@ -89,6 +111,58 @@ class database:
     else:
       self.__logger.debug('getActiveTokenState: Un-expired access_token found')
       return None
+  #########################################################################
+
+  #########################################################################
+  # Get just a currently valid Access Token, if possible, for the given
+  # cmdrname
+  #########################################################################
+  def getAccessToken(self, cmdrname):
+    self.__logger.debug("cmdrname='{}'".format(cmdrname))
+    self.__cursor.execute("SELECT access_token FROM auth WHERE cmdr_name = :cmdrname AND expires > datetime() ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
+    row = self.__cursor.fetchone()
+    if row:
+      self.__logger.debug('Returning Access Token =\n{}'.format(row[0]))
+      return row[0]
+    else: # Try Refresh
+      self.__logger.debug('Access Token is expired, trying Refresh Token...')
+      self.__cursor.execute("SELECT refresh_token FROM auth WHERE cmdr_name = :cmdrname ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
+      row = self.__cursor.fetchone()
+      if row:
+        refresh_token_old = row[0]
+        self.__logger.debug("Retrieved Refresh Token = '{}'".format(refresh_token_old))
+        uri = self.__config.get('auth_api_url') + '/token'
+        response = requests.post(uri,
+          data={
+            "grant_type": "refresh_token",
+            "client_id": self.__config.get('clientid'),
+            "client_secret": self.__config.get('shared_key'),
+            "refresh_token": refresh_token_old
+          },
+          headers={
+            "User-Agent": self.__config.get('user_agent'),
+          }
+        )
+        if response.status_code == 200:
+          self.__logger.debug('Got new Access Token from Refresh Token')
+          tokens = json.loads(response.text)
+          self.updateWithRefreshedAccessToken(
+            tokens['access_token'],
+            tokens['expires_in'],
+            refresh_token_old,
+            tokens['refresh_token']
+          )
+          self.__logger.debug('Returning Access Token =\n{}'.format(row[0]))
+          return tokens['access_token']
+        else:
+          self.__logger.critical("Failed to use Refresh Token: {}".format(response.status_code))
+          return None
+        # 401 - expired?
+        # 500 - Just an error
+      else: # No Refresh Token!
+        self.__logger.critical("No Refresh Token for cmdrname = '{}'".format(cmdrname))
+        return None
+
   #########################################################################
 
   #########################################################################
