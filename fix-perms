@@ -1,5 +1,15 @@
 #!/bin/sh
 
-cd /home/athan/public_html/games/elite-dangerous/fd-api
-chmod -R o+rX ED docs *.pl
-chmod 600 config.txt lwpcookies.txt
+#VERBOSE="-v"
+cd /home/athan/public_html/games/elite-dangerous/fd-api && ( \
+find docs -name \*.html -exec chmod ${VERBOSE} go+r {} \;
+find org \( -name \*.py -o \( -type d -a \! -name __pycache__ \) \) -exec chmod ${VERBOSE} og+rX {} \;
+chmod ${VERBOSE} go+r \
+	*.html
+chmod ${VERBOSE} 600 fd-api-config.yaml
+chmod ${VERBOSE} 700 fd-ed-capi.py
+
+exit $?
+)
+exit $?
+
