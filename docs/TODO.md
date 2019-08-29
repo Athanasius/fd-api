@@ -22,3 +22,4 @@ a User-Agent of the form:
    operation.
 1. Update loop-test.sh to use fd-ed-capi.py
 	1. Need to ensure return codes match up
+1. In-code python documenting comments.
