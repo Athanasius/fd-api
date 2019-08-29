@@ -1,6 +1,9 @@
 import requests
 import json
 
+import pprint
+pp = pprint.PrettyPrinter(indent=2)
+
 ###########################################################################
 # Our base class for profile operations
 ###########################################################################
@@ -25,7 +28,7 @@ class profile(object):
       return None
     # Send request with Access Token
     uri = self.__config.get('capi_url') + '/profile'
-    response = requests.get(uri,
+    response = requests.get(uri, stream=True,
       headers={
         "User-Agent": self.__config.get('user_agent'),
         "Authorization": "Bearer " + access_token,
@@ -33,10 +36,11 @@ class profile(object):
       }
     )
     self.__profile = None
+    peer = response.raw._connection.sock.__dict__['socket'].getpeername()
     if response.status_code == 200:
       self.__profile = json.loads(response.text)
       self.__db.updateLastSuccessfulUse(cmdrname, access_token)
-      self.__logger.debug("Success, headers = \n{}".format(response.headers))
+      self.__logger.debug("Success\nConnected To: {}\nHeaders:\n{}".format(peer, response.headers))
     elif response.status_code == 206:
       self.__logger.error("Got 206, but this isn't a journal request!")
     elif r_status_code == 422: # Unprocessable Entity
