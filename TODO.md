@@ -11,4 +11,6 @@ a User-Agent of the form:
 	1. CAPI journal
 		1. CAPI journal current
 		1. CAPI journal historic
+1. Find out what the expiry time is on a Refresh Token, and what exactly
+   happens if you try to use it.
 1. Implement non-PKCE authorization flow and document it.
