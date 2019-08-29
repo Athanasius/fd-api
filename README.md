@@ -1,23 +1,16 @@
-**This is now obsolete, as Frontier Developments moved over to an OAuth2
-based authentication scheme.**
+**This is a work in progress.  Only the fdev-oauth2 branch has working
+code.**
 
-I've started some work in the "fdev-oauth2" branch to get PKCE
-authentication working.  This time in Python3 rather than Perl.
+See [TODO](docs/TODO.md) for what is/isn't implemented.  The main script
+is 'fd-ed-capi.py' so run:
+
+                fd-ed-capi.py --help
+to check the options.
 
 ---
 
-Code for retrieving an Elite Dangerous Commander's profile data using
-the iOS App API.
+This project is written in Python 3.x (tested on 3.5.x) and implements
+the oAuth2 Authorization mechanism before allowing you to retrieve data
+from the Companion API (CAPI) end points.
 
 See docs/ directory for details on how it works.
-
-To use this code you'll need to put at least your username/email and
-password into config.txt:
-
-```
-user_name: someuser@example.com
-user_password: YourSuperSecretPassword
-```
-
-At time of typing the code just spits out the resulting profile data.
-It's retrieved as a JSON object so easy enough to work with.
