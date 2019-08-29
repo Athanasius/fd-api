@@ -33,7 +33,6 @@ class profile(object):
       }
     )
     self.__profile = None
-    print(response.status_code)
     if response.status_code == 200:
       self.__profile = json.loads(response.text)
       self.__db.updateLastSuccessfulUse(cmdrname, access_token)
