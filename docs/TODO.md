@@ -5,6 +5,8 @@ a User-Agent of the form:
     without having to remember it on every request.
 
 1. Implement use of Access Token against all available endpoints.
+	1. Auth /decode
+	1. Auth /me
 	1. CAPI profile - DONE
 	1. CAPI market
 	1. CAPI shipyard
