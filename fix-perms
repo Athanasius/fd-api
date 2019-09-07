@@ -6,8 +6,9 @@ find docs -name \*.html -exec chmod ${VERBOSE} go+r {} \;
 find org \( -name \*.py -o \( -type d -a \! -name __pycache__ \) \) -exec chmod ${VERBOSE} og+rX {} \;
 chmod ${VERBOSE} go+r \
 	*.html
-chmod ${VERBOSE} 600 fd-api-config.yaml
+chmod ${VERBOSE} 644 fd-api-config.yaml
 chmod ${VERBOSE} 700 fd-ed-capi.py
+chmod ${VERBOSE} 755 oauth2-pkce.py
 
 exit $?
 )
