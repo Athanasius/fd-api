@@ -243,7 +243,7 @@ object containing:
 The tokens you get back from the Authorization Server are JSON Web Tokens
 (JWT).  They are not simply a key to use but also contain information
 themselves.  The /decode and /me endpoints on Frontier's Authorization
-Server simply decode this information and pass it back to you.
+Server decode this information and pass it back to you.
 
 Thus after a User revokes your Client's access it is unsurprising that
 you can still use the /decode and /me endpoints with your Access Token.
@@ -253,9 +253,8 @@ it.
 Furthermore, due to the nature of JWTs, revoking a Client's access does
 not actually revoke the currently active Access Token.  The Access Token
 contains all the information in order for the CAPI Servers or Authorization
-Server to verify it is valid, the contents being encrypted with a
-public key so that only Frontier's servers can verify them using the
-associated private key.
+Server to verify it is valid, the contents being signed and encrypted with a
+key that only Frontier has access to.
 
 Frontier does not have to store the Access Token their end, and it seems
 they do not, they can simply verify it cryptographically.
