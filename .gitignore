@@ -9,3 +9,4 @@ docs/.*sw?
 fd-api-authstate.json
 curl-working.txt
 README.html
+misc/
