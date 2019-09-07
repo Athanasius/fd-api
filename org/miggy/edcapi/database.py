@@ -136,9 +136,10 @@ class database:
           data={
             "grant_type": "refresh_token",
             "client_id": self.__config.get('clientid'),
-            "client_secret": self.__config.get('shared_key'),
             "refresh_token": refresh_token_old
           },
+          ## PKCE Clients are considered unsafe for Shared Keys, so they're not used.
+          #"client_secret": self.__config.get('shared_key'),
           headers={
             "User-Agent": self.__config.get('user_agent'),
           }
