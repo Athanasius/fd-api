@@ -195,7 +195,8 @@ Token that you got as part of that process.
 		   Key"
 		1. refresh_token=REFRESH_TOKEN
 	
-	which all together makes:
+	NB: You only need the client_secret if using non-PKCE Authorization.
+	All together that makes:
 
 			grant_type=refresh_token&client_id=CLIENTID&client_secret=SHAREDKEY&refresh_token=REFRESH_TOKEN
 1. Send this to the token endpoint
