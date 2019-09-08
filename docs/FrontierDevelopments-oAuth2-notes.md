@@ -242,19 +242,27 @@ object containing:
 
 The tokens you get back from the Authorization Server are JSON Web Tokens
 (JWT).  They are not simply a key to use but also contain information
-themselves.  The /decode and /me endpoints on Frontier's Authorization
-Server decode this information and pass it back to you.
+themselves.  The `/decode` and `/me` endpoints on Frontier's Authorization
+Server decrypt this information and pass it back to you.
 
-Thus after a User revokes your Client's access it is unsurprising that
-you can still use the /decode and /me endpoints with your Access Token.
-All the Authorization Server is doing is decoding the content you passed
-it.
-
-Furthermore, due to the nature of JWTs, revoking a Client's access does
-not actually revoke the currently active Access Token.  The Access Token
-contains all the information in order for the CAPI Servers or Authorization
-Server to verify it is valid, the contents being signed and encrypted with a
-key that only Frontier has access to.
+The JWTs Frontier creates for Clients' use contain an encrypted
+Ciphertext.  Within that Ciphertext is some Personal Identifying
+Information (PII) of the User, along with information about allowed
+'downloads' (ship skins and the like), and some metadata like when the
+Access Token expires.  The contents can only be decrypted with a
+key that only Frontier has access to.  Both the CAPI and Authorization
+Servers do check the `exp` field in an Access Token's encrypted Ciphertext
+and will refuse to operate on it if that time has passed.
 
 Frontier does not have to store the Access Token their end, and it seems
 they do not, they can simply verify it cryptographically.
+
+This has two consequences for Clients.  Firstly it is unsurprising that
+if a User revokes a Client's access this does not actually revoke any
+currently *unexpired* Access Token.  It will continue to work with the
+CAPI servers until it expires.
+
+Secondly a Client can always use the `/decode` and `/me` endpoints of
+the Authorization Server with an *unexpired* Access Token.  All the
+Authorization Server is doing is verifying the `exp` time hasn't passed
+and then decrypting the content you passed it.
