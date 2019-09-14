@@ -238,6 +238,10 @@ object containing:
 	   that Access Token
 	3. A new Refresh Token.
 
+1. If the User has Revoked your Client's access the Authorization Server
+   will respond with a '401' HTTP Status when you try to use the Refresh
+   Token.
+
 ## A note on the nature of Tokens
 
 The tokens you get back from the Authorization Server are JSON Web Tokens
