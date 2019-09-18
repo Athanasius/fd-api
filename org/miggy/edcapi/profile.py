@@ -44,8 +44,10 @@ class profile(object):
       self.__logger.debug("Success\nConnected To: {}\nHeaders:\n{}".format(peer, response.headers))
     elif response.status_code == 206:
       self.__logger.error("Got 206, but this isn't a journal request!")
-    elif r_status_code == 422: # Unprocessable Entity
+    elif response.status_code == 422: # Unprocessable Entity
       self.__logger.warn("HTTP Status 422 - Access Token expired?")
+    elif response.status_code == 418: # I'm a teapot - down for maintenance
+      self.__logger.critical("HTTP Status 418 - Servers probably down for maintenance: %s", response.text)
     else:
       self.__logger.critical("Got HTTPS Status: {}".format(response.status_code))
 
