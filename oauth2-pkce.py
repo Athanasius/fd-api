@@ -167,7 +167,7 @@ def handleCGI():
   ########################################
   getparams = cgi.FieldStorage()
   #cgi.test()
-  print("getparams:\n{}\n".format(getparams))
+  #print("getparams:\n{}\n".format(getparams))
   if 'code' not in getparams:
     __logger.error("No 'code' received")
     return(-1)
@@ -212,7 +212,7 @@ def handleCGI():
       req_data = req_data + d + "=" + data.get(d) + "&"
   req_data = req_data[0:-1]
   req_data = req_data.encode('ascii')
-  print("req_data:\n{}\n".format(req_data))
+  #print("req_data:\n{}\n".format(req_data))
   #return(0)
   ### import http.client as http_client
   ### http_client.HTTPConnection.debuglevel = 1
@@ -227,7 +227,7 @@ def handleCGI():
     }
   )
   tokens = json.loads(response.text)
-  print(response.text)
+  #print(response.text)
   ########################################
 
   ########################################
@@ -255,7 +255,7 @@ def handleCGI():
   )
   response = session.get(uri)
   decode = json.loads(response.text)
-  print(response.text)
+  #print(response.text)
   db.updateWithCustomerID(tokens['access_token'], decode['usr']['customer_id'])
   ########################################
 ###########################################################################

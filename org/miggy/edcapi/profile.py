@@ -5,6 +5,9 @@ import json
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
+from logging import Logger
+from yaml import YAMLObject
+
 ###########################################################################
 # Our base class for profile operations
 ###########################################################################
@@ -12,14 +15,14 @@ class profile(object):
 
   #########################################################################
   #########################################################################
-  def __init__(self, db, logger, config):
+  def __init__(self, db, logger: Logger, config: YAMLObject):
     self.__logger = logger
     self.__logger.debug(".")
     self.__db = db
     self.__config = config
   #########################################################################
 
-  def get(self, cmdrname):
+  def get(self, cmdrname: str) -> dict:
     self.__logger.debug('Start')
 
     # Get the Access Token
