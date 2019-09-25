@@ -22,3 +22,8 @@ the Refresh or Access Tokens.
 ## Shipyard
 ## Market
 ## Journal
+
+## HTTP Status Codes
+
+1. 418 - "I'm a teapot" - used to signal that the service is down for
+   maintenance.
