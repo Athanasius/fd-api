@@ -13,6 +13,7 @@ a User-Agent of the form:
 	1. CAPI journal
 		1. CAPI journal current
 		1. CAPI journal historic
+	1. See also: https://gist.github.com/corenting/b6ac5cf8f446f54856e08b6e287fe835
 1. Find out what the expiry time is on a Refresh Token, and what exactly
    happens if you try to use it.
 1. Implement automatically firing the whole Authorization mechanism if
