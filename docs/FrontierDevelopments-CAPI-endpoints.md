@@ -25,5 +25,16 @@ the Refresh or Access Tokens.
 
 ## HTTP Status Codes
 
+1. 401 - Unauthorized - Since the 'September Update' patch on 2019-09-17
+   the CAPI servers use this HTTP status code to signal that the
+   provided Access Token is invalid (certainly for when it's expired).
+
+   The body containing:
+
+		{"status":401,"message":"JWT has incorrect\/unexpected fields"}
 1. 418 - "I'm a teapot" - used to signal that the service is down for
    maintenance.
+
+1. 422 - "Unprocessable Entity" - previously used to signal that a provided
+   Access Token was invalid, likely due to it being expired.  This changed with
+   the 'September Update' patch in 2019.
