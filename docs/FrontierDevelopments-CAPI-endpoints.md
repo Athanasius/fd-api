@@ -88,7 +88,7 @@ as Frontier changes things.
 			1. `locName`: Localised human readable name
 			1. `locDescription`: Localised module
 			   description.
-			1. `priority: Power Priority
+			1. `priority`: Power Priority
 			1. `on`: Powered Status (on/off)
 			1. `free`: ??? Whether it came free with a ship?
 			   It's 'false' on everything, even 'Planetary
