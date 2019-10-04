@@ -6,7 +6,7 @@ import yaml, logging, argparse
 
 import requests
 import pprint
-pp = pprint.PrettyPrinter(indent=2)
+pp = pprint.PrettyPrinter(indent=2, width=10000)
 
 #from org.miggy import edcapi
 #import org.miggy.edcapi.profile as profile
