@@ -26,3 +26,10 @@ a User-Agent of the form:
 1. Update loop-test.sh to use fd-ed-capi.py
 	1. Need to ensure return codes match up
 1. In-code python documenting comments.
+1. Consider a CAPI 'status board'.  Perform each of the following on a
+   schedule and signal when we did and what the state was:
+	1. Was auth.frontierstore.net reachable, and did it respond
+	   properly?
+	1. Can't do auth from scratch, as it requires user interaction.
+	1. Use of Refresh Token for new Access Token
+	1. Each CAPI endpoint
