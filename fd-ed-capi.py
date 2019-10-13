@@ -26,6 +26,7 @@ __config = yaml.load(__configfile, Loader=yaml.CLoader)
 # Logging
 ###########################################################################
 os.environ['TZ'] = 'UTC'
+time.tzset()
 __default_loglevel = logging.INFO
 __logger = logging.getLogger('fd-api')
 __logger.setLevel(__default_loglevel)
