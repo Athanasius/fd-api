@@ -109,7 +109,7 @@ as Frontier changes things.
 1. `launchBays`: Information about in-stock SRVs.  The top level key
    defines slot and size.
 	1. `rebuilds`: How many spares???
-	1. `name`: 'testbuggy' for an sRV
+	1. `name`: 'testbuggy' for an SRV
 	1. `locName`: "SRV Scarab"
 	1. `loadout`: "starter"
 	1. `loadoutName`: "Starter" (Localised?)
@@ -128,7 +128,10 @@ as Frontier changes things.
 
 		{"status":401,"message":"JWT has incorrect\/unexpected fields"}
 1. 418 - "I'm a teapot" - used to signal that the service is down for
-   maintenance.
+   maintenance.  Technically Frontier shouldn't be using this as it's a
+   joke from a couple of April Fools' RFCs:
+   <https://tools.ietf.org/html/rfc2324>
+   <https://tools.ietf.org/html/rfc7168>
 
 1. 422 - "Unprocessable Entity" - previously used to signal that a provided
    Access Token was invalid, likely due to it being expired.  This changed with
