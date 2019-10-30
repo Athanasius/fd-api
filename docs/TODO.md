@@ -16,6 +16,35 @@ a User-Agent of the form:
 	1. CAPI Community Goals - /communitygoals
 		1. Need to query this when a CG is active to see the
 		   output format and contents.
+
+			```{ 
+                activeCommunityGoals: (array of objects)
+                [
+                                { 
+                                id: string
+                                title: string
+                                expiry: string
+                                market_name: string
+                                starsystem_name: string
+                                activityType: string
+                                target_commodity_list: string
+                                target_qty: string
+                                qty: string
+                                objective: string
+                                news: string
+                                bulletin: string
+                                commander_progress: { 
+                                                currentQty: int
+                                                numContributors: int
+                                                commanderContributionQty: int or null
+                                                commanderPercentile: int
+                                                commanderSubscribed: bool
+                                                unixTimeStamp: int
+                                                complete: bool
+                                                }
+                                }
+                ] 
+}```
 	1. See also: https://gist.github.com/corenting/b6ac5cf8f446f54856e08b6e287fe835
 1. Find out what the expiry time is on a Refresh Token, and what exactly
    happens if you try to use it.
