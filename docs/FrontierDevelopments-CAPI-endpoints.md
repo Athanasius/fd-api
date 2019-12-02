@@ -4,6 +4,11 @@ See [FrontierDevelopments-oAuth2-notes](FrontierDevelopments-oAuth2-notes.md)
 for how to use Frontier Developments' oAuth2 system for Authorization on
 the CAPI.
 
+In all instances you'll need to use the Access Token obtained via
+oAuth2 by setting an HTTP header for the request:
+
+        Authorization: Bearer <access_token>
+
 ---
 You might occasionally see a header:
 
@@ -20,7 +25,7 @@ JSON Web Token, for instance, or otherwise related to either
 the Refresh or Access Tokens.
 
 ## Profile
-		<https://companion.orerve.net/profile>
+		GET <https://companion.orerve.net/profile>
 
 provides access to the Cmdr's profile.  What follows is the last known
 information about the output.  This will obviously be subject to change
