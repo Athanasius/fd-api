@@ -31,7 +31,7 @@ __config = yaml.load(__configfile, Loader=yaml.CLoader)
 # Logging
 ###########################################################################
 os.environ['TZ'] = 'UTC'
-__default_loglevel = logging.DEBUG
+__default_loglevel = logging.INFO
 __logger = logging.getLogger('fd-api')
 __logger.setLevel(__default_loglevel)
 __logger_ch = logging.StreamHandler()
@@ -227,7 +227,7 @@ def handleCGI():
     }
   )
   tokens = json.loads(response.text)
-  #print(response.text)
+  print(response.text)
   ########################################
 
   ########################################
@@ -255,7 +255,7 @@ def handleCGI():
   )
   response = session.get(uri)
   decode = json.loads(response.text)
-  #print(response.text)
+  print(response.text)
   db.updateWithCustomerID(tokens['access_token'], decode['usr']['customer_id'])
   ########################################
 ###########################################################################
