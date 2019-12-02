@@ -235,6 +235,7 @@ def handleCGI():
   ########################################
   db.updateWithAccessToken(
     state_recv,
+    tokens['token_type'],
     tokens['access_token'],
     tokens['refresh_token'],
     tokens['expires_in']

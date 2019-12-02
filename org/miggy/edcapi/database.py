@@ -40,15 +40,16 @@ class database:
   #   expires_in - This will be in seconds from 'now'(ish), so needs
   #                conversion
   #########################################################################
-  def updateWithAccessToken(self, state: str, access_token: str, refresh_token: str, expires_in: int):
-    self.__logger.debug("state='{}', access_token='{}', refresh_token='{}', expires_in='{}'".format(state, access_token, refresh_token, expires_in))
+  def updateWithAccessToken(self, state: str, token_type: str, access_token: str, refresh_token: str, expires_in: int):
+    self.__logger.debug("state='{}', token_type='{}', access_token='{}', refresh_token='{}', expires_in='{}'".format(state, token_type, access_token, refresh_token, expires_in))
     now = datetime.datetime.now()
     # Fudge factor of 10 seconds in case processing took a while
     expires_dt = now + datetime.timedelta(0, expires_in - 10)
     expires = str(expires_dt)
     self.__cursor.execute(
-      "UPDATE auth SET access_token = :access_token, refresh_token = :refresh_token, expires = :expires WHERE state = :state",
+      "UPDATE auth SET token_type = :token_type, access_token = :access_token, refresh_token = :refresh_token, expires = :expires WHERE state = :state",
       {
+        "token_type": token_type,
         "access_token": access_token,
         "refresh_token": refresh_token,
         "expires": expires,
@@ -58,17 +59,18 @@ class database:
   #########################################################################
 
   #########################################################################
-  # Update with a just refresh Access Token
+  # Update with a just refreshed Access Token
   #########################################################################
-  def updateWithRefreshedAccessToken(self, access_token: str, expires_in: int, refresh_token_old: str, refresh_token_new: str):
-    self.__logger.debug("access_token='{}', expires_in='{}', refresh_token_old='{}', refresh_token_new='{}'".format(access_token, expires_in, refresh_token_old, refresh_token_new))
+  def updateWithRefreshedAccessToken(self, token_type: str, access_token: str, expires_in: int, refresh_token_old: str, refresh_token_new: str):
+    self.__logger.debug("token_type='{}', access_token='{}', expires_in='{}', refresh_token_old='{}', refresh_token_new='{}'".format(token_type, access_token, expires_in, refresh_token_old, refresh_token_new))
     now = datetime.datetime.now()
     # Fudge factor of 10 seconds in case processing took a while
     expires_dt = now + datetime.timedelta(0, expires_in - 10)
     expires = str(expires_dt)
     self.__cursor.execute(
-      "UPDATE auth SET access_token = :access_token, refresh_token = :refresh_token_new, expires = :expires WHERE refresh_token = :refresh_token_old",
+      "UPDATE auth SET token_type = :token_type, access_token = :access_token, refresh_token = :refresh_token_new, expires = :expires WHERE refresh_token = :refresh_token_old",
       {
+        "token_type": token_type,
         "access_token": access_token,
         "refresh_token_new": refresh_token_new,
         "expires": expires,
@@ -124,11 +126,11 @@ class database:
   #########################################################################
   def getAccessToken(self, cmdrname: str) -> str:
     self.__logger.debug("cmdrname='{}'".format(cmdrname))
-    self.__cursor.execute("SELECT access_token FROM auth WHERE cmdr_name = :cmdrname AND expires > datetime() ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
+    self.__cursor.execute("SELECT token_type, access_token FROM auth WHERE cmdr_name = :cmdrname AND expires > datetime() ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
     row = self.__cursor.fetchone()
     if row:
-      self.__logger.debug('Returning Access Token =\n{}'.format(row[0]))
-      return row[0]
+      self.__logger.debug("Returning Access Token of type '{}' =\n{}".format(row[0], row[1]))
+      return (row[0], row[1])
     else: # Try Refresh
       self.__logger.debug('Access Token is expired, trying Refresh Token...')
       self.__cursor.execute("SELECT refresh_token FROM auth WHERE cmdr_name = :cmdrname ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
@@ -153,13 +155,14 @@ class database:
           self.__logger.debug('Got new Access Token from Refresh Token')
           tokens = json.loads(response.text)
           self.updateWithRefreshedAccessToken(
+            tokens['token_type'],
             tokens['access_token'],
             tokens['expires_in'],
             refresh_token_old,
             tokens['refresh_token']
           )
           self.__logger.debug('Returning Access Token =\n{}'.format(row[0]))
-          return tokens['access_token']
+          return (tokens['token_type'], tokens['access_token'])
         else:
           self.__logger.critical("Failed to use Refresh Token: {}".format(response.status_code))
           return None

@@ -26,7 +26,7 @@ class profile(object):
     self.__logger.debug('Start')
 
     # Get the Access Token
-    access_token = self.__db.getAccessToken(cmdrname)
+    (token_type, access_token) = self.__db.getAccessToken(cmdrname)
     if not access_token:
       self.__logger.critical("No Access Token, you'll need to auth from scratch again")
       return None
@@ -35,7 +35,7 @@ class profile(object):
     response = requests.get(uri, stream=True,
       headers={
         "User-Agent": self.__config.get('user_agent'),
-        "Authorization": "Bearer " + access_token,
+        "Authorization": "%s %s" % (token_type, access_token),
         "Content-Type": "application/json"
       }
     )
