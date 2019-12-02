@@ -9,6 +9,10 @@ oAuth2 by setting an HTTP header for the request:
 
         Authorization: Bearer <access_token>
 
+Note that in theory the token type could be different from 'Bearer'.
+It's safest to store the token_type that comes back from the request for
+an Access Token and repeat that back in this header.
+
 ---
 You might occasionally see a header:
 
