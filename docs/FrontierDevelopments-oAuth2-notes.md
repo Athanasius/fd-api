@@ -186,6 +186,10 @@ The JSON will contain a few keys and their values:
 
 	4. expires_in - Seconds until the Access Token expires. 
 
+For possible future compatibility you might want to store the token_type
+to literally repeat it back when using the Access Token in CAPI
+requests.
+
 ### Summary
 
 1. Generate a VERIFIER.  You'll then generate a CHALLENGE from this,
