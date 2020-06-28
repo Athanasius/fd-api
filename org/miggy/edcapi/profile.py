@@ -42,7 +42,8 @@ class profile(object):
     self.__profile = None
     peer = response.raw._connection.sock.__dict__['socket'].getpeername()
     if response.status_code == 200:
-      self.__profile = json.loads(response.text)
+      self.__raw_profile = response.text
+      self.__profile = json.loads(self.__raw_profile)
       self.__db.updateLastSuccessfulUse(cmdrname, access_token)
       self.__logger.debug("Success\nConnected To: {}\nHeaders:\n{}".format(peer, response.headers))
     elif response.status_code == 206:
@@ -58,5 +59,5 @@ class profile(object):
     else:
       self.__logger.critical("Got HTTPS Status: {}".format(response.status_code))
 
-    return self.__profile
+    return (self.__raw_profile, self.__profile)
 ###########################################################################

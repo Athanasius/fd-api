@@ -47,6 +47,7 @@ __parser = argparse.ArgumentParser()
 __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
 __parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
 __parser.add_argument("--profile", action="store_true", help="Request retrieval of Cmdr's profile")
+__parser.add_argument("--rawoutput", action="store_true", help="Output raw returned data")
 __args = __parser.parse_args()
 if __args.loglevel:
   __level = getattr(logging, __args.loglevel.upper())
@@ -89,11 +90,15 @@ def main():
   capi = org.miggy.edcapi.edcapi(__logger, __config)
 
   if __args.profile:
-    profile = capi.profile.get(cmdrname)
+    (rawprofile, profile) = capi.profile.get(cmdrname)
     if not profile:
       return(-1)
 
-    print(pp.pformat(profile))
+    if __args.rawoutput:
+      print(rawprofile)
+      print('')
+    else:
+      print(pp.pformat(profile))
 
 ###########################################################################
 if __name__ == '__main__':
