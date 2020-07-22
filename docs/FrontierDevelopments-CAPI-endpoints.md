@@ -75,6 +75,10 @@ as Frontier changes things.
 	1. Name
 	1. Allegiance ('faction')
 	1. Numerical ID
+		NB: This has been observed to sometimes be the
+		id64/SystemAddress of the system, and other times be
+		some other id.  The `ship` section below then contains
+		`id` matching this *and* `systemaddress` with the id64.
 1. `ship`: Current Ship data.  Note that this duplicates some data
    that's at the top level.
 	1. `name`: Ship Name
