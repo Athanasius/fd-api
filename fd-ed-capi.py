@@ -9,8 +9,6 @@ import requests
 import pprint
 pp = pprint.PrettyPrinter(indent=2, width=10000)
 
-#from org.miggy import edcapi
-#import org.miggy.edcapi.profile as profile
 import org.miggy.edcapi
 
 ###########################################################################
@@ -45,9 +43,15 @@ __logger.addHandler(__logger_ch)
 ###########################################################################
 __parser = argparse.ArgumentParser()
 __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
-__parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
-__parser.add_argument("--profile", action="store_true", help="Request retrieval of Cmdr's profile")
 __parser.add_argument("--rawoutput", action="store_true", help="Output raw returned data")
+
+__parser_endpoints = __parser.add_mutually_exclusive_group(required=True)
+__parser_endpoints.add_argument("--profile", action="store_true", help="Request retrieval of Cmdr's profile")
+__parser_endpoints.add_argument("--market", action="store_true", help="Request retrieval of market data")
+__parser_endpoints.add_argument("--shipyard", action="store_true", help="Request retrieval of shipyard data")
+__parser_endpoints.add_argument("--fleetcarrier", action="store_true", help="Request retrieval of fleetcarrier data")
+
+__parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
 __args = __parser.parse_args()
 if __args.loglevel:
   __level = getattr(logging, __args.loglevel.upper())
@@ -84,9 +88,6 @@ def loadAuthState(cmdr: str) -> int:
 def main():
   __logger.debug("Start")
 
-  if not __args.profile:
-    __logger.error("You must specify at least one action")
-
   capi = org.miggy.edcapi.edcapi(__logger, __config)
 
   if __args.profile:
@@ -99,6 +100,39 @@ def main():
       print('')
     else:
       print(pp.pformat(profile))
+
+  if __args.market:
+    (rawmarket, market) = capi.market.get(cmdrname)
+    if not market:
+      return(-1)
+
+    if __args.rawoutput:
+      print(rawmarket)
+      print('')
+    else:
+      print(pp.pformat(market))
+
+  if __args.shipyard:
+    (rawshipyard, shipyard) = capi.shipyard.get(cmdrname)
+    if not shipyard:
+      return(-1)
+
+    if __args.rawoutput:
+      print(rawshipyard)
+      print('')
+    else:
+      print(pp.pformat(shipyard))
+
+  if __args.fleetcarrier:
+    (rawfleetcarrier, fleetcarrier) = capi.fleetcarrier.get(cmdrname)
+    if not fleetcarrier:
+      return(-1)
+
+    if __args.rawoutput:
+      print(rawfleetcarrier)
+      print('')
+    else:
+      print(pp.pformat(fleetcarrier))
 
 ###########################################################################
 if __name__ == '__main__':
