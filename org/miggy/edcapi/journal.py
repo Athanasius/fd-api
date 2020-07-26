@@ -22,7 +22,7 @@ class journal(object):
     self.__config = config
   #########################################################################
 
-  def get(self, cmdrname: str) -> dict:
+  def get(self, cmdrname: str, date: str) -> dict:
     self.__logger.debug('Start')
 
     # Get the Access Token
@@ -32,6 +32,13 @@ class journal(object):
       return None
     # Send request with Access Token
     uri = self.__config.get('capi_url') + '/journal'
+
+    if date != '':
+      uri += '/' + date
+    else:
+      date = "today"
+
+    self.__logger.debug("Getting: '{uri}'".format(uri=uri))
     response = requests.get(uri, stream=True,
       headers={
         "User-Agent": self.__config.get('user_agent'),
@@ -48,11 +55,11 @@ class journal(object):
 
     elif response.status_code == 204:
       # Not Found
-      self.__logger.warning("No data found, have you played yet today, game-time?")
+      self.__logger.warning("No data found, have you played during {date}, game-time?".format(date=date))
       return None
 
     elif response.status_code == 206:
-      self.__logger.error("Got HTTP Status 206: try again later (CAPI can take too much time to gather it all for a given request")
+      self.__logger.warning("Got HTTP Status 206: Partial Output: CAPI service couldn't gather all the data, try again later for the rest")
 
     elif response.status_code in [ 401, 422 ]:
       # NB: CAPI servers used to return '422 - unprocessable entity' when

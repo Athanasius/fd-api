@@ -3,7 +3,11 @@
 
 import os
 import time
-import yaml, logging, argparse
+import yaml
+import logging
+import argparse
+import dateutil.parser
+import dateutil.utils
 
 import requests
 import pprint
@@ -50,14 +54,22 @@ __parser_endpoints.add_argument("--profile", action="store_true", help="Request 
 __parser_endpoints.add_argument("--market", action="store_true", help="Request retrieval of market data")
 __parser_endpoints.add_argument("--shipyard", action="store_true", help="Request retrieval of shipyard data")
 __parser_endpoints.add_argument("--fleetcarrier", action="store_true", help="Request retrieval of fleetcarrier data")
-__parser_endpoints.add_argument("--journal", action="store_true", help="Request retrieval of journal data")
+__parser_endpoints.add_argument(
+  "--journal",
+  nargs="?",
+  default="",
+  help="Request retrieval of journal data",
+)
 
 __parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
+
 __args = __parser.parse_args()
 if __args.loglevel:
   __level = getattr(logging, __args.loglevel.upper())
   __logger.setLevel(__level)
   __logger_ch.setLevel(__level)
+
+__logger.debug('Args: {!r}'.format(__args))
 cmdrname = __args.cmdrname[0]
 ###########################################################################
 
@@ -94,7 +106,7 @@ def main():
   if __args.profile:
     (rawprofile, profile) = capi.profile.get(cmdrname)
     if not profile:
-      return(-1)
+      return -1
 
     if __args.rawoutput:
       print(rawprofile)
@@ -105,7 +117,7 @@ def main():
   if __args.market:
     (rawmarket, market) = capi.market.get(cmdrname)
     if not market:
-      return(-1)
+      return -1
 
     if __args.rawoutput:
       print(rawmarket)
@@ -116,7 +128,7 @@ def main():
   if __args.shipyard:
     (rawshipyard, shipyard) = capi.shipyard.get(cmdrname)
     if not shipyard:
-      return(-1)
+      return -1
 
     if __args.rawoutput:
       print(rawshipyard)
@@ -127,7 +139,7 @@ def main():
   if __args.fleetcarrier:
     (rawfleetcarrier, fleetcarrier) = capi.fleetcarrier.get(cmdrname)
     if not fleetcarrier:
-      return(-1)
+      return -1
 
     if __args.rawoutput:
       print(rawfleetcarrier)
@@ -135,10 +147,25 @@ def main():
     else:
       print(pp.pformat(fleetcarrier))
 
-  if __args.journal:
-    rawjournal = capi.journal.get(cmdrname)
+  # You get 'False' if not present at all, 'None' if no optional arg
+  if __args.journal != False:
+    # Validate the date format
+    if __args.journal:
+      try:
+        j_date = dateutil.parser.parse(__args.journal)
+
+      except Exception as e:
+        __logger.error("Could not parse the string '{date}' into a date".format(date=__args.journal))
+        return -1
+
+    else:
+      j_date = dateutil.utils.today()
+
+    datestr = j_date.strftime("%Y/%m/%d")
+    __logger.debug('Retrieving journals for date "{date}"'.format(date=datestr))
+    rawjournal = capi.journal.get(cmdrname, datestr)
     if not rawjournal:
-      return(-1)
+      return -1
 
     print('{journal}\n'.format(journal=rawjournal))
 
