@@ -58,7 +58,7 @@ __parser_endpoints.add_argument(
   "--journal",
   metavar="date",
   nargs="?",
-  default="",
+  default=False,
   help="Request retrieval of journal data.  Defaults to 'today' if no 'date' is given, else the string is parsed per python dateutil.parser capabilities.",
 )
 
