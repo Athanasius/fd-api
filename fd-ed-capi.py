@@ -168,7 +168,7 @@ def main():
     if not rawjournal:
       return -1
 
-    print('{journal}\n'.format(journal=rawjournal))
+    print('{journal}'.format(journal=rawjournal))
 
 ###########################################################################
 if __name__ == '__main__':
