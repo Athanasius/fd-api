@@ -22,7 +22,7 @@ import org.miggy.edcapi
 ###########################################################################
 __configfile_fd = os.open("fd-api-config.yaml", os.O_RDONLY)
 __configfile = os.fdopen(__configfile_fd)
-__config = yaml.load(__configfile, Loader=yaml.CLoader)
+__config = yaml.load(__configfile)
 ###########################################################################
 
 ###########################################################################

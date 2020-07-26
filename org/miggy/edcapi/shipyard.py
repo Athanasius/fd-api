@@ -40,7 +40,11 @@ class shipyard(object):
       }
     )
     self.__shipyard = None
-    peer = response.raw._connection.sock.__dict__['socket'].getpeername()
+
+    peer = getattr(response.raw._connection.sock, 'socket', None)
+    if peer:
+      peer = peer.getpeername()
+
     if response.status_code == 200:
       self.__raw_shipyard = response.text
       self.__shipyard = json.loads(self.__raw_shipyard)
