@@ -4,6 +4,7 @@ from . import profile as profile
 from . import market as market
 from . import shipyard as shipyard
 from . import fleetcarrier as fleetcarrier
+from . import journal as journal
 from logging import Logger
 from yaml import YAMLObject
 
@@ -25,4 +26,5 @@ class edcapi(object):
     self.market = market.market(self.__db, self.__logger, self.__config)
     self.shipyard = shipyard.shipyard(self.__db, self.__logger, self.__config)
     self.fleetcarrier = fleetcarrier.fleetcarrier(self.__db, self.__logger, self.__config)
+    self.journal = journal.journal(self.__db, self.__logger, self.__config)
   #########################################################################

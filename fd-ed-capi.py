@@ -50,6 +50,7 @@ __parser_endpoints.add_argument("--profile", action="store_true", help="Request 
 __parser_endpoints.add_argument("--market", action="store_true", help="Request retrieval of market data")
 __parser_endpoints.add_argument("--shipyard", action="store_true", help="Request retrieval of shipyard data")
 __parser_endpoints.add_argument("--fleetcarrier", action="store_true", help="Request retrieval of fleetcarrier data")
+__parser_endpoints.add_argument("--journal", action="store_true", help="Request retrieval of journal data")
 
 __parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
 __args = __parser.parse_args()
@@ -133,6 +134,13 @@ def main():
       print('')
     else:
       print(pp.pformat(fleetcarrier))
+
+  if __args.journal:
+    rawjournal = capi.journal.get(cmdrname)
+    if not rawjournal:
+      return(-1)
+
+    print('{journal}\n'.format(journal=rawjournal))
 
 ###########################################################################
 if __name__ == '__main__':
