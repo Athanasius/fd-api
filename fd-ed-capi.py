@@ -56,9 +56,10 @@ __parser_endpoints.add_argument("--shipyard", action="store_true", help="Request
 __parser_endpoints.add_argument("--fleetcarrier", action="store_true", help="Request retrieval of fleetcarrier data")
 __parser_endpoints.add_argument(
   "--journal",
+  metavar="date",
   nargs="?",
   default="",
-  help="Request retrieval of journal data",
+  help="Request retrieval of journal data.  Defaults to 'today' if no 'date' is given, else the string is parsed per python dateutil.parser capabilities.",
 )
 
 __parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
