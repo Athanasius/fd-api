@@ -13,6 +13,6 @@ to check the options.
 
 ---
 
-This project is written in Python 3.x (tested on 3.5.x) and implements
+This project is written in Python 3.x (tested on 3.7.x) and implements
 the oAuth2 Authorization mechanism before allowing you to retrieve data
 from the Companion API (CAPI) end points.
