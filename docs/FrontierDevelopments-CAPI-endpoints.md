@@ -141,6 +141,7 @@ CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://g
 1. `id` - Station ID
 1. `name` - Station name
 1. `outpostType` - What type of outpost it is, examples: `starport`, `fleetcarrier`
+	- NB: Might not match the type in Journal events
 1. `imported` - What commodities that are imported from this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
 1. `exported` - What commodities that are exported from this station (dictionary, commodity id and key)
@@ -276,6 +277,7 @@ CommodityId can be found in the [EDCD/FDevIDs repo](https://github.com/EDCD/FDev
 1. `id` - Station ID
 1. `name` - Station name
 1. `outpostType` - What type of outpost it is, examples: `starport`, `fleetcarrier`
+	- NB: Might not match the type in Journal events
 1. `imported` - What commodities that are imported from this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
 1. `exported` - What commodities that are exported from this station (dictionary, commodity id and key)
