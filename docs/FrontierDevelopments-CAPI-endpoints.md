@@ -141,7 +141,6 @@ CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://g
 1. `id` - Station ID
 1. `name` - Station name
 1. `outpostType` - What type of outpost it is, examples: `starport`, `fleetcarrier`
-   - This might not match the output in the journal.
 1. `imported` - What commodities that are imported from this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
 1. `exported` - What commodities that are exported from this station (dictionary, commodity id and key)
@@ -276,8 +275,7 @@ CommodityId can be found in the [EDCD/FDevIDs repo](https://github.com/EDCD/FDev
 
 1. `id` - Station ID
 1. `name` - Station name
-1. `outpostType` - What type of outpost it is, examples: `starport`, `fleetcarrier`. 
-   - This might not match the output in the journal.
+1. `outpostType` - What type of outpost it is, examples: `starport`, `fleetcarrier`
 1. `imported` - What commodities that are imported from this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
 1. `exported` - What commodities that are exported from this station (dictionary, commodity id and key)
@@ -359,20 +357,19 @@ To know what kind of output you can except from the `/journal` endpoint, we reco
 
 ## HTTP Status Codes
 
-1.  401 - Unauthorized - Since the 'September Update' patch on 2019-09-17
-    the CAPI servers use this HTTP status code to signal that the
-    provided Access Token is invalid (certainly for when it's expired).
+1. 401 - Unauthorized - Since the 'September Update' patch on 2019-09-17
+   the CAPI servers use this HTTP status code to signal that the
+   provided Access Token is invalid (certainly for when it's expired).
 
-    The body containing:
+   The body containing:
 
-        {"status":401,"message":"JWT has incorrect\/unexpected fields"}
+		{"status":401,"message":"JWT has incorrect\/unexpected fields"}
+1. 418 - "I'm a teapot" - used to signal that the service is down for
+   maintenance.  Technically Frontier shouldn't be using this as it's a
+   joke from a couple of April Fools' RFCs:
+   <https://tools.ietf.org/html/rfc2324>
+   <https://tools.ietf.org/html/rfc7168>
 
-1.  418 - "I'm a teapot" - used to signal that the service is down for
-    maintenance. Technically Frontier shouldn't be using this as it's a
-    joke from a couple of April Fools' RFCs:
-    <https://tools.ietf.org/html/rfc2324>
-    <https://tools.ietf.org/html/rfc7168>
-
-1.  422 - "Unprocessable Entity" - previously used to signal that a provided
-    Access Token was invalid, likely due to it being expired. This changed with
-    the 'September Update' patch in 2019.
+1. 422 - "Unprocessable Entity" - previously used to signal that a provided
+   Access Token was invalid, likely due to it being expired.  This changed with
+   the 'September Update' patch in 2019.
