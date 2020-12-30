@@ -164,7 +164,7 @@ CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://g
 	1. `engineer` - Status of engineers (`ok`, `unavailable`, `private`)
 1. `economies` - What different types of economies you can expect from the station (dictionary, economyId as key)
 	- Example `"23": { "name" : "HighTech", "proportion": 0.7 }`
-1. `prohibited` - What commidities that are prohibited on this station (dictionary, commodityId and key)
+1. `prohibited` - Which commodities are prohibited on this station (dictionary, commodityId and key)
    - Example `"128049162": "Cobalt"`
 1. `modules` - The list of modules on this station (dictionary, moduleId as key)
 	1. `id` - ModuleId
@@ -278,9 +278,9 @@ CommodityId can be found in the [EDCD/FDevIDs repo](https://github.com/EDCD/FDev
 1. `name` - Station name
 1. `outpostType` - What type of outpost it is, examples: `starport`, `fleetcarrier`
 	- NB: Might not match the type in Journal events
-1. `imported` - What commodities that are imported from this station (dictionary, commodity id and key)
+1. `imported` - Which commodities are imported to this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
-1. `exported` - What commodities that are exported from this station (dictionary, commodity id and key)
+1. `exported` - Which commodities are exported from this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
 1. `services` - What services the station provides and their status
 	1. `dock` - Status of Dock (`ok`, `unavailable`, `private`)
@@ -300,7 +300,7 @@ CommodityId can be found in the [EDCD/FDevIDs repo](https://github.com/EDCD/FDev
 	1. `engineer` - Status of engineers (`ok`, `unavailable`, `private`)
 1. `economies` - What different types of economies you can expect from the station (dictionary, economyId as key)
 	- Example `"23": { "name" : "HighTech", "proportion": 0.7 }`
-1. `prohibited` - What commidities that are prohibited on this station (dictionary, commodityId as key)
+1. `prohibited` - Which commodities are prohibited on this station (dictionary, commodityId as key)
    - Example `"128049162": "Cobalt"`
 1. `commodities` - All available commodities and their info
 	1. `id` - Commodity ID
@@ -314,7 +314,7 @@ CommodityId can be found in the [EDCD/FDevIDs repo](https://github.com/EDCD/FDev
 	1. `stock` - How many items are in stock of this commodity
 	1. `demand` - How many items the station has demand for (more is better)
 	1. `statusFlags`
-	1. `categoryName` - What type of category the commodity belongs to
+	1. `categoryName` - Category the commodity belongs to
 	1. `locName` - Localised name
 
 ---
