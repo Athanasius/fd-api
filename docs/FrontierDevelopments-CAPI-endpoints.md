@@ -28,6 +28,33 @@ expiry time on the cookie.
 JSON Web Token, for instance, or otherwise related to either
 the Refresh or Access Tokens.
 
+# Limit the frequency of queries
+
+The CAPI is not designed as a real-time service to be spammed with
+queries in an attempt to always be up to date.  For one thing the CAPI's
+data itself can lag behind what the relevant game client is seeing.
+
+In general try not to issue more than one query a minute.  Although it's
+acceptable to, e.g., issue all of `/market`, `/shipyard` and `/outfitting`
+in rapid succession upon docking.
+
+For the `/journal` endpoint you should **not** expect it to update in
+realtime from live gameplay.  Ideally you should only query it once a
+gameplay session is complete.
+
+# CAPI for any beta of the game
+
+Frontier might, or might not, provide the beta CAPI endpoint during a
+game beta.  Simply use the URL prefix
+
+    https://pts-companion.orerve.net
+
+instead of
+
+    https://companion.orerve.net
+    
+in order to access it.
+
 ## Profile
 		GET <https://companion.orerve.net/profile>
 
