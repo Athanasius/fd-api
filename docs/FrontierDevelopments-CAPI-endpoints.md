@@ -34,9 +34,11 @@ The CAPI is not designed as a real-time service to be spammed with
 queries in an attempt to always be up to date.  For one thing the CAPI's
 data itself can lag behind what the relevant game client is seeing.
 
-In general try not to issue more than one query a minute.  Although it's
-acceptable to, e.g., issue all of `/market`, `/shipyard` and `/outfitting`
-in rapid succession upon docking.
+In general try not to issue more than one query a minute.  Although
+EDMarketConnector gets away with issuing all of `/profile`, `/market`,
+and `/shipyard` in rapid succession upon docking, Frontier have in the
+past stated that rate limiting might kick in if you perform more than 2
+queries per second.
 
 For the `/journal` endpoint you should **not** expect it to update in
 realtime from live gameplay.  Ideally you should only query it once a
