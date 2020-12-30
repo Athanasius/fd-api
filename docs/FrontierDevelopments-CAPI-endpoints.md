@@ -214,82 +214,171 @@ CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://g
 
     	GET <https://companion.orerve.net/fleetcarrier>
 
-Fetches the fleet carrier data, that the authenticated commander owns
+provides access to information about the Cmdr's fleet carrier.
 
-CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://github.com/EDCD/FDevIDs)
+1. `name`: The carrier's callsign and name information
+    1. `callsign`: The carrier's callsign, in the format A1A-A1A.
+    1. `vanityName`: The carrier's name, before any filtering is applied.
+    1. `filteredVanityName`: The carrier's name, after applying FDev's obscenity filter.
 
-1. `name` - The name for the carrier
-	1. `callsign` - The callsign of the fleet carrier
-	1. `vanityName`
-	1. `filteredVanityName`
-1. `currentStarSystem` - The current location of the carrier
-1. `balance` - The current balance (credits) on this carrier
-1. `fuel` - How much fuel this carrier has (Tritium)
-1. `state` - 
-1. `theme` - The type of carrier we're dealing with (UI theme)
-1. `dockingAccess` - Declare who can dock with this carrier
-1. `notoriousAccess` - 
-1. `capacity` - The capacity status of the different things available
-	1. `shipPacks`
-	1. `modulePacks`
-	1. `cargoForSale`
-	1. `cargoNotForSale`
-	1. `cargoSpaceReserved`
-	1. `crew`
-	1. `freeSpace`
-1. `itinerary`
-	1. `completed` - History data over completed jumps with the carrier
-		1. `departureTime` - When the carrier left the system
-		1. `arrivalTime` - When the carrier arrived to the system
-		1. `state` - Was the jump successful, cancelled or any other state?
-		1. `visitDurationSeconds` - How many seconds were spent in the system
-		1. `starsystem` - The visited starsystem
-	1. `totalDistanceJumpedLY` - How many lightyears this carrier has ever jumped
-	1. `currentJump` - The currently scheduled jump, can be null
-1. `marketFinance`
-	1. `cargoTotalValue` - The total value (credits) of the cargo
-	1. `allTimeProfit` - How much profit this carrier has made, all time
-	1. `numCommodsForSale` - How many commodities are for sale
-	1. `numCommodsPurchaseOrders` - How many purchase orders for commodities there are
-	1. `balanceAllocForPurchaseOrders` - How many credits are allocated for purchase orders
-1. `blackmarketFinance`
-	1. `cargoTotalValue` - The total value (credits) of the cargo
-	1. `allTimeProfit` - How much profit this carrier has made, all time
-	1. `numCommodsForSale` - How many commodities are for sale
-	1. `numCommodsPurchaseOrders` - How many purchase orders for commodities there are
-	1. `balanceAllocForPurchaseOrders` - How many credits are allocated for purchase orders
-1. `finance`
-	1. `bankBalance` - How much credits are in the bank of the carrier
-	1. `bankReservedBalance` - How much of said credits are reserved
-	1. `taxation` - The taxation on sales/purchases
-	1. `numServices` - How many services are active
-	1. `numOptionalServices` - How many optional services are active
-	1. `debtThreshold` - Declares the debt threshold
-	1. `maintenance` - How much maintenance costs
-	1. `maintenanceToDate` - How much maintenance has been paid to date
-	1. `coreCost` - Core costs for the carrier
-	1. `servicesCost` - The costs for services
-	1. `servicesCostToDate` - How much services costs has been paid to date
-	1. `jumpsCost` - How much a jump costs
-	1. `numJumps` - Number of jumps
-1. `servicesCrew`
-1. `cargo`
-	1. `commodity` - The commodity available
-	1. `mission` - Is this a mission commodity?
-	1. `qty` - The quantity available of this commodity
-	1. `value` - The value (credits) of this commodity
-	1. `stolen` - Was this item stolen?
-	1. `locName` - Localised name of the commodity
-1. `reputation`
-	- Reputation is an array with objects that describe ties to the major factions
-	1. `majorFaction` - The major faction
-	1. `score` - The reputation score
-1. `market`
-	- Contains the same information as a call to [`/market`](#market), check that for more info
-1. `ships`
-	- Contains the same information as the modules in [`/shipyard`](#shipyard), check that for more info
-1. `modules`
-	- Contains the same information as the modules in [`/shipyard`](#shipyard), check that for more info
+1. `currentStarSystem`: Carrier's current system.
+1. `balance`: Amount of credits in carrier's bank account. This is separate from the owner CMDRs.
+1. `fuel`: Amount of Tritium fuel in the carrier's Tritium reserves. (Max 1000)
+
+1. `state`: Current state of the carrier. Known states are:
+    * `normalOperation`: Operating normally.
+    * `debtState`: Services offline due to carrier being out of funds.
+    * `pendingDecommission`: Carrier has entered the decommission process.
+
+1. `theme`: Livery theme for the carrier. Known liveries:
+    * `SearchAndRescue`
+    * `Mining`
+    * `Trader`
+    * `Explorer`
+    * `AntiXeno`
+    * `BountyHunter`
+
+1. `dockingAccess`: Who can dock with the fleet carrier. Known states:
+    * `all`
+    * `squadronfriends`
+    * `friends`
+    * `none`
+
+1. `notoriousAccess`: Can CMDRs with notoriety dock? Boolean.
+
+1. `capacity`: Capacity usage
+    1. `shipPacks`: Capacity used by ship packs (for shipyard)
+    1. `modulePacks`: Capacity used for module packs (for outfitting)
+    1. `cargoForSale`: Capacity used for cargo that is listed for sale on market
+    1. `cargoNotForSale`: Capacity used for cargo that is NOT listed
+    1. `cargoSpaceReserved`: Capacity reserved for cargo that is listed to BUY on market
+    1. `crew`: Capacity used for crewing carrier modules
+    1. `freeSpace`: Unused capacity
+
+1. `itinerary`: Ships' itinerary
+    1. `completed`: Completed jumps (list)
+       1. `departureTime`: Time carrier left system, `None` if currently in system
+        1. `arrivalTime`: Time carrier arrived in system
+        1. `state`: ?? (always `success` in seen entries)
+        1. `visitDurationSeconds`: How long carrier was/has been in system, in seconds
+        1. `starsystem`: Name of starsystem
+    1. `totalDistanceJumpedLY`: Total travel distance for carrier
+    1. `currentJump`: System name for current plotted jump, otherwise `None`
+
+1. `marketFinances`: Market information for the carrier
+    1. `cargoTotalValue`: Computed value of entire cargo
+    1. `allTimeProfit`: Total profit earned by carrier market
+    1. `numCommodsForSale`: Number of commodities listed for sale on carrier market
+    1. `numCommodsPurchaseOrders`: Number of commodities listed to buy on carrier market
+    1. `balanceAllocForPurchaseOrders`: How many credits are allocated for fulfilling buy orders
+
+1. `blackmarketFinances`: Black market information for the carrier.
+    1. `cargoTotalValue`: Computed value of entire cargo
+    1. `allTimeProfit`: Total profit earned by carrier market
+    1. `numCommodsForSale`: Number of commodities listed for sale on carrier market
+    1. `numCommodsPurchaseOrders`: Number of commodities listed to buy on carrier market
+    1. `balanceAllocForPurchaseOrders`: How many credits are allocated for fulfilling buy orders
+
+1. `finance`:
+    1. `bankBalance`: Total credits in fleet carrier's account
+    1. `bankReservedBalance`: Balance reserved for carrier upkeep
+    1. `taxation`: Taxation rate for service use on the carrier
+    1. `numServices`: Number of services active on carrier
+    1. `numOptionalServices`: Number of optional services active on carrier
+    1. `debtThreshold`: Maximum negative credit balance before carrier automatically decommissions
+    1. `maintenance`: Total cost pending for weekly maintenance
+    1. `maintenanceToDate`: Total paid for maintenance in carrier lifetime
+    1. `coreCost`: Current base weekly cost for carrier
+    1. `servicesCost`: Current pending weekly cost for services, active or suspended
+    1. `servicesCostToDate`: Total paid for services in carrier lifetime
+    1. `jumpsCost`: Current pending cost for jumps made in the past week
+    1. `numJumps`: Number of jumps made in the past week
+
+1. `servicesCrew`: Enumerates assigned crew on the carrier. All services share the
+                    same crewMember data as shown in first example.
+   1. `refuel`: If refuel facility is installed, shows data on crew member.
+        * `crewMember`:
+            1. `name`: Crew member's name
+            1. `gender`: Crew member's gender (`F` or `M`)
+            1. `enabled`: Service enabled, `YES` or `NO`
+            1. `faction`: Crew member's native faction
+            1. `salary`: Weekly salary for crew member
+            1. `avatarStr`: A string, containing data needed to represent the NPC's avatar.
+                Example: `img://avatar:Seed:1913354398/Expression:eExpression_Positive/Labels:Gender|female-Faction|Federation-StarportContactType|CarrierRefuel-NPCType|StarportContact/DisableColourCorrection:0/`
+            1. `lastEdit`: When crew member was last changed
+        * `invoicesWeekToDate`: List containing elements as below
+            1. `wages`: Amount paid/owed
+            1. `from`: From date
+            1. `until`: To date
+            1. `type`: ??, known states `current` and `expected`
+        * `status`: ?? known states: `ok`
+   1. `repair`: Repair facility crew member information, if installed.
+   1. `rearm`: Rearm facility crew member information, if installed.
+   1. `shipyard`: Shipyard facility crew member information, if installed.
+   1. `outfitting`: Outfitting facility crew member information, if installed.
+   1. `voucherredemption`: Voucher redemption facility crew member information, if installed.
+   1. `exploration`: Interstellar cartographer facility crew member information, if installed.
+   1. `blackmarket`: Black market facility crew member information, if installed.
+
+1. `cargo`: A list of all cargo items on board, in the following format:
+    1. `commodity`: Non-localized commodity name
+    1. `mission`: Whether the commodity is mission attached, boolean
+    1. `qty`: Quantity of commodity (Always 1, in our experience)
+    1. `value`: Value of commodity
+    1. `stolen`: Whether the commodity is flagged as stolen
+    1. `locName`: Localized name of commodity, follows carrier owner's localization
+1. `reputation`: A list of faction reputations, in the following format.
+    1. `majorFaction`: Name of faction
+    1. `score`: Reputation score, 0 to 100
+    
+    Known valid majorFaction strings are `empire`, `federation`, `independent` and `alliance`.
+   
+1. `market`: Market information for the carrier, same as journal market entries
+    1. `id`: Numerical unique ID for the market
+    1. `name`: Market name, same as callsign
+    1. `outpostType`: Always `fleetcarrier` in this context
+    1. `imported`: List of imported commodities (carrier buys)
+    1. `exported`: List of exported commodities (carrier sells)
+    1. `services`: Array of service status
+        1. `commodities`:
+        1. `carrierfuel`:
+        1. `refuel`:
+        1. `repair`:
+        1. `rearm`:
+        1. `shipyard`:
+        1. `outfitting`:
+        1. `blackmarket`:
+        1. `voucherredemption`:
+        1. `exploration`:
+        1. `carriermanagement`:
+        1. `stationmenu`:
+        1. `dock`:
+        1. `crewlounge`:
+        1. `engineer`:
+        1. `contacts`: 
+		
+       For all the above, the following state strings are possible: `ok`: Active and available, 
+	   `unavailable`: Not installed, or `private`: Only accessible by owner
+
+    1. `economies`: An array, always set to the same:
+        * `136`:
+            1. `name`: Always `Carrier`
+            1. `proportion`: Always `1`
+    1. `prohibited`: Prohibited commodities. Always empty.
+    1. `commodities`: A list of available commodities
+        1. `id`: Commodity ID
+        1. `categoryname`: Commodity category name
+        1. `name`: Non-localized string for commodity, as in journal data
+        1. `stock`: Number of commodity in stock
+        1. `buyPrice`: Price to buy commodity FROM carrier
+        1. `sellPrice`: Price to sell commodity TO carrier
+        1. `demand`: Number of commodity carrier is willing to buy
+        1. `stockBracket`: ??
+        1. `locName`: Localized name of commodity, depending on fleet carrier owner's locale
+1. `ships`: Shipyard information
+   * `shipyard_list`: List containing available ships
+1. `modules`: Available modules in outfitting
+
 
 ---
 
