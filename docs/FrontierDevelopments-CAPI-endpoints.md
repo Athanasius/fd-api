@@ -142,11 +142,11 @@ CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://g
 1. `name` - Station name
 1. `outpostType` - What type of outpost it is, examples: `starport`, `fleetcarrier`
 	- NB: Might not match the type in Journal events
-1. `imported` - What commodities that are imported from this station (dictionary, commodity id and key)
+1. `imported` - Commodities that are imported to this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
-1. `exported` - What commodities that are exported from this station (dictionary, commodity id and key)
+1. `exported` - Commodities that are exported from this station (dictionary, commodity id and key)
    - Example `"128049162": "Cobalt"`
-1. `services` - What services the station provides and their status
+1. `services` - Services the station provides and their status
 	1. `dock` - Status of Dock (`ok`, `unavailable`, `private`)
 	1. `contacts` - Status of Contacts (`ok`, `unavailable`, `private`)
 	1. `exploration` - Status of Exploration (`ok`, `unavailable`, `private`)
@@ -199,7 +199,7 @@ CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://g
 1. `balance` - The current balance (credits) on this carrier
 1. `fuel` - How much fuel this carrier has (Tritium)
 1. `state` - 
-1. `theme` - What type of carrier we're dealing with (UI theme)
+1. `theme` - The type of carrier we're dealing with (UI theme)
 1. `dockingAccess` - Declare who can dock with this carrier
 1. `notoriousAccess` - 
 1. `capacity` - The capacity status of the different things available
