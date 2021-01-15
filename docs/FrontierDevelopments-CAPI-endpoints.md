@@ -449,13 +449,13 @@ Gives access to the authenticated players journals, all sessions are combined in
 Example requests:
 
 ```plain
-GET <https://companion.oreve.net/journal>
+GET <https://companion.orerve.net/journal>
 ```
 
 This request give you the current day journal data
 
 ```plain
-GET <https://companion.oreve.net/journal/2020/12/30>
+GET <https://companion.orerve.net/journal/2020/12/30>
 ```
 
 This request would give you the journal for the specific date, in this case the 30th December, 2020.
