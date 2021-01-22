@@ -215,6 +215,13 @@ initiate a new Authorization Request, which would require the User to
 approve your Client again.  Instead you can utilise the Refresh
 Token that you got as part of that process.
 
+**Note, however, that you will only be able to use *any* Refresh token
+for an account for at most 25 days after the initial Authorization.
+After that you will need the user to re-Authorize your Application.**
+When they do they should only need to login on `auth.frontierstore.net`
+with this succeeding at that point, rather than also asking them to
+Approve your Application again.
+
 1. Craft a POST request in order to get a new Access Token.
 	1. This being POST you'll need to include the header
 
