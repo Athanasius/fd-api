@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 # vim: textwidth=0 wrapmargin=0 tabstop=2 shiftwidth=2 softtabstop=2 smartindent smarttab
 
-import os
-import time
-import yaml
-import logging
 import argparse
 import dateutil.parser
 import dateutil.utils
-
-import requests
+import logging
+import os
+import pathlib
 import pprint
+import requests
+import sys
+import time
+import yaml
+
 pp = pprint.PrettyPrinter(indent=2, width=10000)
 
 import org.miggy.edcapi
@@ -37,7 +39,8 @@ __logger.addHandler(__logger_ch)
  "  Configuration
 """
 ###########################################################################
-__configfile_fd = os.open("fd-api-config.yaml", os.O_RDONLY)
+print(sys.path[0])
+__configfile_fd = os.open(pathlib.Path(sys.path[0]) / "fd-api-config.yaml", os.O_RDONLY)
 __configfile = os.fdopen(__configfile_fd)
 __config = yaml.load(__configfile)
 if __config.get('user_agent') is None:
