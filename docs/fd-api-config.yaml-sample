@@ -6,5 +6,15 @@ clientid: "CLIENTID"
 shared_key: "SHAREDKEY"
 # Your WWW/local protocol script to receive responses from Frontier
 redirect_uri: "REDIRECT_URI"
+# Our User-Agent
+# NB: Frontier requested these identify the project, prefixed with 'EDCD-'
+#     if at all associated with EDCD, and have a version
+#user_agent: "EDCD-CHANGEME-0.0.0"
+
 # A writeable location for the sqlite3 database
 db_sqlite_file: "/FULL/PATH/TO/fd-api-auth.sql"
+
+# Frontier ED CAPI server URL prefixes
+capi_urls:
+	live: "https://companion.orerve.net"
+	pts: "https://pts-companion.orerve.net"
