@@ -48,6 +48,7 @@ __logger.addHandler(__logger_ch)
 __parser = argparse.ArgumentParser()
 __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
 __parser.add_argument("--rawoutput", action="store_true", help="Output raw returned data")
+__parser.add_argument("--pts", action="store_true", help="Use PTS server, not live")
 
 __parser_endpoints = __parser.add_mutually_exclusive_group(required=True)
 __parser_endpoints.add_argument("--profile", action="store_true", help="Request retrieval of Cmdr's profile")
@@ -101,6 +102,13 @@ def loadAuthState(cmdr: str) -> int:
 ###########################################################################
 def main():
   __logger.debug("Start")
+
+  # Set the required capi_url
+  if __args.pts:
+    __config['capi_url'] = __config['capi_urls']['pts']
+
+  else:
+    __config['capi_url'] = __config['capi_urls']['live']
 
   capi = org.miggy.edcapi.edcapi(__logger, __config)
 
