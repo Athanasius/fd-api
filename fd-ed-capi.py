@@ -16,16 +16,6 @@ pp = pprint.PrettyPrinter(indent=2, width=10000)
 import org.miggy.edcapi
 
 ###########################################################################
-"""
- "  Configuration
-"""
-###########################################################################
-__configfile_fd = os.open("fd-api-config.yaml", os.O_RDONLY)
-__configfile = os.fdopen(__configfile_fd)
-__config = yaml.load(__configfile)
-###########################################################################
-
-###########################################################################
 # Logging
 ###########################################################################
 os.environ['TZ'] = 'UTC'
@@ -40,6 +30,20 @@ __logger_formatter.default_time_format = '%Y-%m-%d %H:%M:%S';
 __logger_formatter.default_msec_format = '%s.%03d'
 __logger_ch.setFormatter(__logger_formatter)
 __logger.addHandler(__logger_ch)
+###########################################################################
+
+###########################################################################
+"""
+ "  Configuration
+"""
+###########################################################################
+__configfile_fd = os.open("fd-api-config.yaml", os.O_RDONLY)
+__configfile = os.fdopen(__configfile_fd)
+__config = yaml.load(__configfile)
+if __config.get('user_agent') is None:
+  __logger.error('You must set a "user_agent" in the config file')
+  exit(-1)
+
 ###########################################################################
 
 ###########################################################################
