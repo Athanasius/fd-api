@@ -142,7 +142,7 @@ def handleCLI():
   ########################################
   __logger.debug("auth_api_url: '{}'".format(__config.get('auth_api_url')))
   request_uri = (__config.get('auth_api_url') +
-      '/auth?audience=frontier'
+      '/auth?audience=frontier,steam,epic'
       '&scope=auth%20capi'
       '&response_type=code'
       '&client_id=' + __config.get('clientid') +
