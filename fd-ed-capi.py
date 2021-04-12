@@ -39,7 +39,6 @@ __logger.addHandler(__logger_ch)
  "  Configuration
 """
 ###########################################################################
-print(sys.path[0])
 __configfile_fd = os.open(pathlib.Path(sys.path[0]) / "fd-api-config.yaml", os.O_RDONLY)
 __configfile = os.fdopen(__configfile_fd)
 __config = yaml.load(__configfile)
