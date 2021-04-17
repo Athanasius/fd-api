@@ -70,7 +70,7 @@ as Frontier changes things.
 	1. `name`: The Cmdr's Name
 	1. `id`: Numerical ID
 	1. `docked`: Whether currently docked
-	1. `alive`: 
+	1. `alive`: boolean
 	1. `credits`: Credit Balance
 	1. `debt`: Any current debt amount
 	1. `currentShipId`: Numerical ID of current ship (index within
@@ -88,12 +88,6 @@ as Frontier changes things.
 		1. `crime`
 	1. `capabilities`: .e.g. whether the account has Horizons, and if it
 	   can buy the Cobra Mk IV.
-1. `shipName`: Current ship's Name
-1. `id`: Current ship's Numerical ID (see `currentShipId` above)
-1. Current Station, if applicable
-	1. Name
-	1. Numerical ID
-1. `starsystem`: Current star system
 1. `lastStarport`: Information about the last StarPort they were docked at
 	1. `name`: Name
 	1. `id`: Numerical ID
@@ -110,52 +104,72 @@ as Frontier changes things.
 		`id` matching this *and* `systemaddress` with the id64.
 1. `ship`: Current Ship data.  Note that this duplicates some data
    that's at the top level.
+	1. `id`: Current ship's Numerical ID (see `currentShipId` above)
 	1. `name`: Ship Name
-	1. `shipID`: Ship ID
-	1. Numerical ID
 	1. `value` Ship Value, with breakdown cargo/modules/hull
 		1. `hull`
 		1. `modules`
 		1. `cargo`
 		1. `total`
 		1. `unloaned`
-	1. `alive`
+	1. `free`: Whether this ship was free ?
+	1. `shipName`: Current ship's Name
+	1. `shipID`: Ship ID
+	1. `station`: Current Station, if applicable
+		1. `id`: Numerical ID
+		1. `name`: Name of station
+	1. `starsystem`: Current star system
+		1. `id`
+		1. `name`
+		1. `systemaddress`: id64
+	1. `alive`: boolean
+	1. `health`
+		1. `hull`
+		1. `shield`
+		1. `shieldup`: boolean
+		1. `integrity`
+		1. `paintwork`
+	1. `cockpitBreached`: boolean
 	1. `oxygenRemaining`: Oxygen Remaining
 	1. `modules`: The first key in each entry describes which slot
 	   the module is for, and its size.
 		1. `module`:
-			1. `name`: FDev Symbol
 			1. `id`: Numerical FDev ID
-			1. `value`: Price bought for ('value')
+			1. `name`: FDev Symbol
 			1. `locName`: Localised human readable name
 			1. `locDescription`: Localised module
 			   description.
-			1. `priority`: Power Priority
-			1. `on`: Powered Status (on/off)
+			1. `value`: Price bought for ('value')
 			1. `free`: ??? Whether it came free with a ship?
 			   It's 'false' on everything, even 'Planetary
 			   Approach Suite' and the Fuel Tank.
 			1. `health`: Current Health
+			1. `on`: Powered Status (on/off)
+			1. `priority`: Power Priority
 		1. `engineer`: Details of currently applied engineering
+			1. `engineerName`: Which engineer was used
+			1. `engineerId`: Engineer's numerical ID
 			1. `recipeName`: Non-localised blueprint name
 			1. `recipeLocName`: Localised blueprint name
 			1. `recpieLocDescription`: Localised blueprint
 			   description
 			1. `recipeLevel`: Rank of the blueprint
-			1. `engineerName`: Which engineer was used
-			1. `engineerId`: Engineer's numerical ID
 		1. `WorkInProgress_modifications`: Details about the
 		   effects of the applied blueprint
 		1. `specialModifications`: "Special Effects", empty
 		   array if none
-1. `launchBays`: Information about in-stock SRVs.  The top level key
+	1. `launchBays`: Information about in-stock SRVs.  The top level key
    defines slot and size.
-	1. `rebuilds`: How many spares???
-	1. `name`: 'testbuggy' for an SRV
-	1. `locName`: "SRV Scarab"
-	1. `loadout`: "starter"
-	1. `loadoutName`: "Starter" (Localised?)
-1. Other Ships data
+		1. `name`: 'testbuggy' for an SRV
+		1. `locName`: "SRV Scarab"
+		1. `rebuilds`: How many spares???
+		1. `loadout`: "starter"
+		1. `loadoutName`: "Starter" (Localised?)
+1. `ships`: Information about all ships the Commander owns.  NB: This
+   could be a simple array (if all ship indexes are contiguous from
+   `0`), or a dictionary indexed with a *string* version of the ship ID
+   if there are any other gaps.
+   The data is the same format as in the `ship` key.
 
 ---
 
