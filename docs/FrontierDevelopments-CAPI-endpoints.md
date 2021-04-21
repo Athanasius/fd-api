@@ -69,7 +69,7 @@ provides access to the Cmdr's profile.  What follows is the last known
 information about the output.  This will obviously be subject to change
 as Frontier changes things.
 
-	1. Where 'FDev ID' or 'FDev Symbol' is mentioned please see <https://github.com/EDCD/FDevIDs>
+Where 'FDev ID' or 'FDev Symbol' is mentioned please see <https://github.com/EDCD/FDevIDs>.
 
 1. `commander`: Information about the Cmdr
 	1. `name`: The Cmdr's Name
