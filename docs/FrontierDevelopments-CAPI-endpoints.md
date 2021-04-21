@@ -57,6 +57,11 @@ instead of
     
 in order to access it.
 
+## End Points
+
+You can check the currently available endpoints by sending a bare query
+to simply <https://companion.orerve.net/>.
+
 ## Profile
 		GET <https://companion.orerve.net/profile>
 
