@@ -1,5 +1,6 @@
 # vim: textwidth=0 wrapmargin=0 tabstop=2 shiftwidth=2 softtabstop=2 smartindent smarttab
 from . import database as database
+from . import endpoints as endpoints
 from . import profile as profile
 from . import market as market
 from . import shipyard as shipyard
@@ -22,6 +23,7 @@ class edcapi(object):
     self.__config = config
 
     self.__db = database.database(self.__logger, self.__config)
+    self.endpoints = endpoints.endpoints(self.__db, self.__logger, self.__config)
     self.profile = profile.profile(self.__db, self.__logger, self.__config)
     self.market = market.market(self.__db, self.__logger, self.__config)
     self.shipyard = shipyard.shipyard(self.__db, self.__logger, self.__config)
