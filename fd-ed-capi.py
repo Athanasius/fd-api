@@ -69,6 +69,7 @@ __parser_endpoints.add_argument(
   default=False,
   help="Request retrieval of journal data.  Defaults to 'today' if no 'date' is given, else the string is parsed per python dateutil.parser capabilities.",
 )
+__parser_endpoints.add_argument("--communitygoals", action="store_true", help="Request retrieval of Community Goals data")
 
 __parser.add_argument("cmdrname", nargs=1, help="Specify the Cmdr Name for this Authorization")
 
@@ -191,6 +192,13 @@ def main():
       return -1
 
     print('{journal}'.format(journal=rawjournal))
+
+  if __args.communitygoals:
+    rawcgs, cgs = capi.communitygoals.get(cmdrname)
+    if __args.rawoutput:
+      print(f'{rawcgs}\n')
+    else:
+      print(pprint.pformat(cgs, width=79))
 
 ###########################################################################
 if __name__ == '__main__':

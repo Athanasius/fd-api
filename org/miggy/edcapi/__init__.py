@@ -6,6 +6,7 @@ from . import market as market
 from . import shipyard as shipyard
 from . import fleetcarrier as fleetcarrier
 from . import journal as journal
+from . import communitygoals as communitygoals
 from logging import Logger
 from yaml import YAMLObject
 
@@ -29,4 +30,5 @@ class edcapi(object):
     self.shipyard = shipyard.shipyard(self.__db, self.__logger, self.__config)
     self.fleetcarrier = fleetcarrier.fleetcarrier(self.__db, self.__logger, self.__config)
     self.journal = journal.journal(self.__db, self.__logger, self.__config)
+    self.communitygoals = communitygoals.communitygoals(self.__db, self.__logger, self.__config)
   #########################################################################
