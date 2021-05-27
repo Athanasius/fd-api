@@ -490,7 +490,7 @@ This request would give you the journal for the specific date, in this case the 
 
 ### Expected output
 
-To know what kind of output you can except from the `/journal` endpoint, we recommend reading the [Journal Manual](https://hosting.zaonce.net/community/journal/v28/Journal_Manual_v28.pdf) to see what you can encounter.
+To know what kind of output you can except from the `/journal` endpoint, we recommend reading the [Journal Manual](http://hosting.zaonce.net/community/journal/v31/Journal_Manual_v31.pdf) to see what you can encounter.
 
 ---
 
