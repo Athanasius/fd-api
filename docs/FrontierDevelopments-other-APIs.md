@@ -54,3 +54,8 @@ As of 2021-05-27 we know of these sources for GalNet news posts:
 There was another endpoint that could give you JSON output, but it was
  hosted on `elitedangerous-website-backend-production.elitedangerous.com`.
 That hostname no longer resolves.
+
+## See Also
+
+Someone else has been investigating this -
+https://gist.github.com/corenting/b6ac5cf8f446f54856e08b6e287fe835
