@@ -36,11 +36,21 @@ As of 2021-05-27 we know of:
 
 ## GalNet Posts
 
-As of 2021-05-27 we know of only one source for GalNet news posts:
+As of 2021-05-27 we know of these sources for GalNet news posts:
 
 1. Community site RSS feed -
    https://community.elitedangerous.com/galnet-rss
 
-There was an endpoint that could give you JSON output, but it was hosted
-on `elitedangerous-website-backend-production.elitedangerous.com` - a
-hostname that no longer resolves.
+1. cms.zaonce.net - `https://cms.zaonce.net/en-GB/jsonapi/node/galnet_article`
+
+    1. With `Accept: */*` this returns JSON with the response header
+     `content-type: application/vnd.api+json`.
+    1. You can also filter to specific articles with, e.g.
+
+          `https://cms.zaonce.net/en-GB/jsonapi/node/galnet_article?filter%5Bfield_slug%5D=tritium-mining-marks-alliance-election-day`
+
+      Note the URL %-escaping of `[...]` to `%5B...%5D`.
+
+There was another endpoint that could give you JSON output, but it was
+ hosted on `elitedangerous-website-backend-production.elitedangerous.com`.
+That hostname no longer resolves.
