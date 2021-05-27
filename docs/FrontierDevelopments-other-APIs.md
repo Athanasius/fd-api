@@ -23,3 +23,13 @@ As of 2021-05-27 we know of:
     1. `Accept: text/xml` will return XML as per the response header
      `Content-Type: application/xml`.
 
+## GalNet Posts
+
+As of 2021-05-27 we know of only one source for GalNet news posts:
+
+1. Community site RSS feed -
+   https://community.elitedangerous.com/galnet-rss
+
+There was an endpoint that could give you JSON output, but it was hosted
+on elitedangerous-website-backend-production.elitedangerous.com - a
+hostname that no longer resolves.
