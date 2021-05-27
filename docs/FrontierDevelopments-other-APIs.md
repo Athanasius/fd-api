@@ -39,7 +39,7 @@ As of 2021-05-27 we know of:
 As of 2021-05-27 we know of these sources for GalNet news posts:
 
 1. Community site RSS feed -
-   https://community.elitedangerous.com/galnet-rss
+   `https://community.elitedangerous.com/galnet-rss`.
 
 1. cms.zaonce.net - `https://cms.zaonce.net/en-GB/jsonapi/node/galnet_article`
 
