@@ -1,5 +1,15 @@
 # Other Frontier Developers APIs for Elite Dangerous
 
+There are a few other APIs provider by Frontier for the game Elite
+Dangerous that they've either explicitly told us about or never made a
+fuss about us using.
+
+These tend to relate to general game information, nothing
+commander-specific.
+
+No, there's no public API for general game data like "market prices at a
+given station".
+
 ## Community Goals
 
 As of 2021-05-27 we know of:
@@ -10,6 +20,7 @@ As of 2021-05-27 we know of:
   supported:
 
     1. `de` - German
+    1. `en` - English
     1. `fr` - French
     1. `es` - Spanish
     1. `pt` - Portugese (Brazilian?)
@@ -31,5 +42,5 @@ As of 2021-05-27 we know of only one source for GalNet news posts:
    https://community.elitedangerous.com/galnet-rss
 
 There was an endpoint that could give you JSON output, but it was hosted
-on elitedangerous-website-backend-production.elitedangerous.com - a
+on `elitedangerous-website-backend-production.elitedangerous.com` - a
 hostname that no longer resolves.
