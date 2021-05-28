@@ -237,6 +237,15 @@ CommodityId, EconomyId, ShipId can be found in the [EDCD/FDevIDs repo](https://g
 
 provides access to information about the Cmdr's fleet carrier.
 
+### Response codes
+
+| Code  | Status          | Description                                                                                          |
+| :---- | :-------------- | :--------------------------------------------------------------------------------------------------- |
+| `200` | OK              | This means you got the Fleet Carrier Data                                      |
+| `204` | No Content | This means that the player does not own a Fleet Carrier |
+
+### Expected Output
+
 1. `name`: The carrier's callsign and name information
     1. `callsign`: The carrier's callsign, in the format A1A-A1A.
     1. `vanityName`: The carrier's name, before any filtering is applied.
