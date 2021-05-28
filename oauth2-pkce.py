@@ -189,8 +189,8 @@ def handleCGI():
   if auth_state and state_recv != auth_state['state']:
     __logger.error("Received state doesn't match the stored one")
     return(-2)
-  __logger.info("Auth Code: '{}'".format(auth_code))
-  __logger.info("Received State: '{}'".format(state_recv))
+  __logger.debug("Auth Code: '{}'".format(auth_code))
+  __logger.debug("Received State: '{}'".format(state_recv))
   ########################################
 
 
