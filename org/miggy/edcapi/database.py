@@ -126,6 +126,7 @@ class database:
   #########################################################################
   def getAccessToken(self, cmdrname: str) -> str:
     self.__logger.debug("cmdrname='{}'".format(cmdrname))
+    # self.__cursor.execute("SELECT token_type, access_token FROM auth WHERE cmdr_name = :cmdrname ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
     self.__cursor.execute("SELECT token_type, access_token FROM auth WHERE cmdr_name = :cmdrname AND expires > datetime() ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
     row = self.__cursor.fetchone()
     if row:
