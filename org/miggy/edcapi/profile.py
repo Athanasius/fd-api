@@ -49,7 +49,7 @@ class profile(object):
       self.__raw_profile = response.text
       self.__profile = json.loads(self.__raw_profile)
       self.__db.updateLastSuccessfulUse(cmdrname, access_token)
-      self.__logger.debug("Success\nConnected To: {}\nHeaders:\n{}".format(peer, response.headers))
+      self.__logger.debug(f'Success\nConnected To: {peer}\nHeaders:\n{response.headers}')
 
     elif response.status_code == 206:
       self.__logger.error("Got 206, but this isn't a journal request!")
