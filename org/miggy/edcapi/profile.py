@@ -65,7 +65,7 @@ class profile(object):
       self.__logger.critical("HTTP Status 418 - Servers probably down for maintenance: %s", response.text)
 
     else:
-      self.__logger.critical("Got HTTPS Status: {}".format(response.status_code))
+      self.__logger.critical(f'Got HTTPS Status: {response.status_code}')
 
     return (self.__raw_profile, self.__profile)
 ###########################################################################
