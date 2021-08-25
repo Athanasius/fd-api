@@ -59,7 +59,7 @@ class profile(object):
       #     the Access Token you'd tried to use was expired.  After the
       #     'September Update' patch in Sep 2019 they changed to using
       #     '401 - unauthorised' for this.
-      self.__logger.warn("HTTP Status {} - Access Token expired: {}".format(response.status_code, response.content.decode(encoding='utf-8')))
+      self.__logger.warn(f'HTTP Status {response.status_code} - Access Token expired: {response.content.decode(encoding="utf-8")}')
 
     elif response.status_code == 418: # I'm a teapot - down for maintenance
       self.__logger.critical("HTTP Status 418 - Servers probably down for maintenance: %s", response.text)
