@@ -30,6 +30,7 @@ class profile(object):
     if not access_token:
       self.__logger.critical("No Access Token, you'll need to auth from scratch again")
       return None
+
     # Send request with Access Token
     uri = self.__config.get('capi_url') + '/profile'
     response = requests.get(uri, stream=True,
