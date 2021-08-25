@@ -50,16 +50,20 @@ class profile(object):
       self.__profile = json.loads(self.__raw_profile)
       self.__db.updateLastSuccessfulUse(cmdrname, access_token)
       self.__logger.debug("Success\nConnected To: {}\nHeaders:\n{}".format(peer, response.headers))
+
     elif response.status_code == 206:
       self.__logger.error("Got 206, but this isn't a journal request!")
+
     elif response.status_code in [ 401, 422 ]:
       # NB: CAPI servers used to return '422 - unprocessable entity' when
       #     the Access Token you'd tried to use was expired.  After the
       #     'September Update' patch in Sep 2019 they changed to using
       #     '401 - unauthorised' for this.
-      self.__logger.warn("HTTP Status {} - Access Token expired".format(response.status_code))
+      self.__logger.warn("HTTP Status {} - Access Token expired: {}".format(response.status_code, response.content.decode(encoding='utf-8')))
+
     elif response.status_code == 418: # I'm a teapot - down for maintenance
       self.__logger.critical("HTTP Status 418 - Servers probably down for maintenance: %s", response.text)
+
     else:
       self.__logger.critical("Got HTTPS Status: {}".format(response.status_code))
 
