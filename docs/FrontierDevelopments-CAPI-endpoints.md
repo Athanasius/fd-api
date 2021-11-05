@@ -394,7 +394,11 @@ provides access to information about the Cmdr's fleet carrier.
         * `136`:
             1. `name`: Always `Carrier`
             1. `proportion`: Always `1`
-    1. `prohibited`: Prohibited commodities. Always empty.
+    1. `prohibited`: Which commodities are prohibited on this station
+    (dictionary, commodityId and key).
+       This has been observed to match the list for the Minor Faction
+       that controls the system the Fleet Carrier is situated in.
+       Will be empty if the MF doesn't prohibit anything.
     1. `commodities`: A list of available commodities
         1. `id`: Commodity ID
         1. `categoryname`: Commodity category name
