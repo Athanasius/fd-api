@@ -36,7 +36,8 @@ class fleetcarrier(object):
       headers={
         "User-Agent": self.__config.get('user_agent'),
         "Authorization": "%s %s" % (token_type, access_token),
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+      #  "Accept": "application/xml"
       }
     )
     self.__fleetcarrier = None
@@ -47,6 +48,7 @@ class fleetcarrier(object):
 
     if response.status_code == 200:
       self.__raw_fleetcarrier = response.text
+      self.__logger.debug(f"Content:\n{self.__raw_fleetcarrier}")
       self.__fleetcarrier = json.loads(self.__raw_fleetcarrier)
       self.__db.updateLastSuccessfulUse(cmdrname, access_token)
       self.__logger.debug("Success\nConnected To: {}\nHeaders:\n{}".format(peer, response.headers))
