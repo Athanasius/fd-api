@@ -55,8 +55,9 @@ __parser = argparse.ArgumentParser()
 __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
 __parser.add_argument("--rawoutput", action="store_true", help="Output raw returned data")
 __parser.add_argument("--pts", action="store_true", help="Use PTS server, not live")
+__parser.add_argument("--decode-access-token", action="store_true", help="Decode the currently stored Access Token for the requested Commander")
 
-__parser_endpoints = __parser.add_mutually_exclusive_group(required=True)
+__parser_endpoints = __parser.add_mutually_exclusive_group(required=False)
 __parser_endpoints.add_argument("--endpoints", action="store_true", help="Ask the CAPI server what the currently available endpoints are")
 __parser_endpoints.add_argument("--profile", action="store_true", help="Request retrieval of Cmdr's profile")
 __parser_endpoints.add_argument("--market", action="store_true", help="Request retrieval of market data")
@@ -119,6 +120,10 @@ def main():
     __config['capi_url'] = __config['capi_urls']['live']
 
   capi = org.miggy.edcapi.edcapi(__logger, __config)
+
+  if __args.decode_access_token:
+    token_details = capi.decode(cmdrname)
+    print(f'{token_details}')
 
   if __args.endpoints:
     rawep, ep = capi.endpoints.get(cmdrname)

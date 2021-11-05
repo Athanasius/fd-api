@@ -4,6 +4,7 @@ from apsw import SQLITE_OPEN_READWRITE as SQLITE_OPEN_READWRITE
 
 import datetime
 import requests, json
+from typing import Tuple
 
 from typing import Optional
 from logging import Logger
@@ -175,6 +176,22 @@ class database:
 
   #########################################################################
 
+  #########################################################################
+  # Get just a currently valid Access Token, if possible, for the given
+  # cmdrname
+  #########################################################################
+  def getLatestAccessToken(self, cmdrname: str) -> Tuple[str, str]:
+    self.__logger.debug("cmdrname='{}'".format(cmdrname))
+    # self.__cursor.execute("SELECT token_type, access_token FROM auth WHERE cmdr_name = :cmdrname ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
+    self.__cursor.execute("SELECT token_type, access_token FROM auth WHERE cmdr_name = :cmdrname ORDER BY id DESC LIMIT 1", {"cmdrname": cmdrname})
+    row = self.__cursor.fetchone()
+    if row:
+      self.__logger.debug("Returning Access Token of type '{}' =\n{}".format(row[0], row[1]))
+      return row[0], row[1]
+
+    return None
+
+  #########################################################################
   #########################################################################
   # Get an auth state that matches a given state token
   #########################################################################

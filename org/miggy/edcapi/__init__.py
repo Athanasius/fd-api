@@ -1,4 +1,9 @@
 # vim: textwidth=0 wrapmargin=0 tabstop=2 shiftwidth=2 softtabstop=2 smartindent smarttab
+import requests
+from logging import Logger
+from typing import Dict, Optional
+from yaml import YAMLObject
+
 from . import database as database
 from . import endpoints as endpoints
 from . import profile as profile
@@ -7,8 +12,6 @@ from . import shipyard as shipyard
 from . import fleetcarrier as fleetcarrier
 from . import journal as journal
 from . import communitygoals as communitygoals
-from logging import Logger
-from yaml import YAMLObject
 
 ###########################################################################
 # Class for all edcapi operations
@@ -31,4 +34,29 @@ class edcapi(object):
     self.fleetcarrier = fleetcarrier.fleetcarrier(self.__db, self.__logger, self.__config)
     self.journal = journal.journal(self.__db, self.__logger, self.__config)
     self.communitygoals = communitygoals.communitygoals(self.__db, self.__logger, self.__config)
+  #########################################################################
+
+
+  #########################################################################
+  # Decode the latest Access Token for the given Commander
+  #########################################################################
+  def decode(self, cmdr: str) -> str:  # -> Optional[Dict]:
+    token_type, access_token = self.__db.getLatestAccessToken(cmdr)
+
+    if token_type is None:
+      return None
+
+    self.__logger.debug(f'Access Token being decoded:\n{access_token}\n')
+    # Send request with Access Token
+    uri = 'https://auth.frontierstore.net/decode'
+    response = requests.get(uri,
+      headers={
+        "User-Agent": self.__config.get('user_agent'),
+        "Authorization": "%s %s" % (token_type, access_token),
+        "Content-Type": "application/json"
+      }
+    )
+
+    return response.text
+
   #########################################################################
