@@ -1,0 +1,5 @@
+# For MarkDown -> HTML conversion
+grip
+
+# All of the normal requirements
+-r requirements.txt

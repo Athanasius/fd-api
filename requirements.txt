@@ -1,5 +1,6 @@
 # Has to be early, as others depend on it
 wheel
+setuptools
 
 # For SQLite support
 apsw
