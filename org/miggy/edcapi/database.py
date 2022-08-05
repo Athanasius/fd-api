@@ -166,7 +166,7 @@ class database:
           self.__logger.debug('Returning Access Token =\n{}'.format(row[0]))
           return (tokens['token_type'], tokens['access_token'])
         else:
-          self.__logger.critical("Failed to use Refresh Token: {}".format(response.status_code))
+          self.__logger.critical("Failed to use Refresh Token: {}\n{}\n".format(response.status_code, response.content.decode('utf-8')))
           return None
         # 401 - expired?
         # 500 - Just an error
