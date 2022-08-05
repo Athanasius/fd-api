@@ -12,6 +12,7 @@ import requests
 import sys
 import time
 import yaml
+import yaml.loader
 
 pp = pprint.PrettyPrinter(indent=2, width=10000)
 
@@ -27,7 +28,7 @@ __logger = logging.getLogger('fd-api')
 __logger.setLevel(__default_loglevel)
 __logger_ch = logging.StreamHandler()
 __logger_ch.setLevel(__default_loglevel)
-__logger_formatter = logging.Formatter('%(asctime)s;%(name)s;%(levelname)s;%(module)s.%(funcName)s: %(message)s')
+__logger_formatter = logging.Formatter('%(asctime)s;%(name)s;%(levelname)s;%(module)s.%(funcName)s:%(lineno)s: %(message)s')
 __logger_formatter.default_time_format = '%Y-%m-%d %H:%M:%S';
 __logger_formatter.default_msec_format = '%s.%03d'
 __logger_ch.setFormatter(__logger_formatter)
@@ -41,7 +42,7 @@ __logger.addHandler(__logger_ch)
 ###########################################################################
 __configfile_fd = os.open(pathlib.Path(sys.path[0]) / "fd-api-config.yaml", os.O_RDONLY)
 __configfile = os.fdopen(__configfile_fd)
-__config = yaml.load(__configfile)
+__config = yaml.load(__configfile, yaml.loader.BaseLoader)
 if __config.get('user_agent') is None:
   __logger.error('You must set a "user_agent" in the config file')
   exit(-1)
