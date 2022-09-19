@@ -58,5 +58,29 @@ class edcapi(object):
     )
 
     return response.text
+  #########################################################################
+
+
+  #########################################################################
+  # Report back what /me says for the access token
+  #########################################################################
+  def me(self, cmdr: str) -> str:  # -> Optional[Dict]:
+    token_type, access_token = self.__db.getLatestAccessToken(cmdr)
+
+    if token_type is None:
+      return None
+
+    self.__logger.debug(f'Access Token for /me:\n{access_token}\n')
+    # Send request with Access Token
+    uri = 'https://auth.frontierstore.net/me'
+    response = requests.get(uri,
+      headers={
+        "User-Agent": self.__config.get('user_agent'),
+        "Authorization": "%s %s" % (token_type, access_token),
+        "Content-Type": "application/json"
+      }
+    )
+
+    return response.text
 
   #########################################################################

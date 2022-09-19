@@ -57,6 +57,7 @@ __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, IN
 __parser.add_argument("--rawoutput", action="store_true", help="Output raw returned data")
 __parser.add_argument("--pts", action="store_true", help="Use PTS server, not live")
 __parser.add_argument("--decode-access-token", action="store_true", help="Decode the currently stored Access Token for the requested Commander")
+__parser.add_argument("--me", action="store_true", help="Send a /me request for the access token")
 
 __parser_endpoints = __parser.add_mutually_exclusive_group(required=False)
 __parser_endpoints.add_argument("--endpoints", action="store_true", help="Ask the CAPI server what the currently available endpoints are")
@@ -124,6 +125,10 @@ def main():
 
   if __args.decode_access_token:
     token_details = capi.decode(cmdrname)
+    print(f'{token_details}')
+
+  if __args.me:
+    token_details = capi.me(cmdrname)
     print(f'{token_details}')
 
   if __args.endpoints:
