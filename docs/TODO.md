@@ -1,3 +1,5 @@
+1. Get the web server execution to use the venv.  Custom apache
+   configuration, or bouncing it through a shell script ?
 1. Figure out a way to have a single request.Session so that we can set
 a User-Agent of the form:
 
@@ -8,11 +10,11 @@ a User-Agent of the form:
 	1. Auth /decode
 	1. Auth /me
 	1. CAPI profile - DONE
-	1. CAPI market
-	1. CAPI shipyard
-	1. CAPI journal
-		1. CAPI journal current
-		1. CAPI journal historic
+	1. CAPI market - DONE
+	1. CAPI shipyard - DONE
+	1. CAPI journal - DONE
+		1. CAPI journal current - DONE
+		1. CAPI journal historic - DONE
 	1. CAPI Community Goals - /communitygoals
 		1. Need to query this when a CG is active to see the
 		   output format and contents.
@@ -46,6 +48,8 @@ a User-Agent of the form:
                 ] 
 }```
 	1. See also: https://gist.github.com/corenting/b6ac5cf8f446f54856e08b6e287fe835
+1. CL arg to try an expired Access Token anyway, in order to check the
+   server response is as expected.
 1. Find out what the expiry time is on a Refresh Token, and what exactly
    happens if you try to use it.
 1. Implement automatically firing the whole Authorization mechanism if
