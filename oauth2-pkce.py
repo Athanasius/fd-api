@@ -145,7 +145,7 @@ def handleCLI():
       '/auth?'
       'response_type=code'
       '&audience=frontier,steam,epic'
-      '&scope=auth%20capi'
+      '&scope=capi'
       '&client_id=' + __config.get('clientid') +
       '&code_challenge=' + challenge_b64_str +
       '&code_challenge_method=S256'
