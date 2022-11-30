@@ -55,7 +55,12 @@ if __config.get('user_agent') is None:
 __parser = argparse.ArgumentParser()
 __parser.add_argument("--loglevel", help="set the log level to one of: DEBUG, INFO (default), WARNING, ERROR, CRITICAL")
 __parser.add_argument("--rawoutput", action="store_true", help="Output raw returned data")
-__parser.add_argument("--pts", action="store_true", help="Use PTS server, not live")
+
+__parser_capi_servers = __parser.add_mutually_exclusive_group(required=False)
+__parser_capi_servers.add_argument("--live", action="store_true", help="Use Live galaxy server")
+__parser_capi_servers.add_argument("--legacy", action="store_true", help="Use Legacy galaxy server")
+__parser_capi_servers.add_argument("--pts", action="store_true", help="Use PTS server")
+
 __parser.add_argument("--decode-access-token", action="store_true", help="Decode the currently stored Access Token for the requested Commander")
 __parser.add_argument("--me", action="store_true", help="Send a /me request for the access token")
 
@@ -115,7 +120,13 @@ def main():
   __logger.debug("Start")
 
   # Set the required capi_url
-  if __args.pts:
+  if __args.live:
+    __config['capi_url'] = __config['capi_urls']['live']
+
+  elif __args.legacy:
+    __config['capi_url'] = __config['capi_urls']['legacy']
+
+  elif __args.pts:
     __config['capi_url'] = __config['capi_urls']['pts']
 
   else:
