@@ -44,23 +44,82 @@ For the `/journal` endpoint you should **not** expect it to update in
 realtime from live gameplay.  Ideally you should only query it once a
 gameplay session is complete.
 
-# CAPI for any beta of the game
+# Available CAPI hosts
+You need to use the correct host for the data you are expecting to
+retrieve.  As of Odyssey Update 14 this mostly pertains to the
+Live/Legacy galaxy split.
 
-Frontier might, or might not, provide the beta CAPI endpoint during a
-game beta.  Simply use the URL prefix
+The rest of this documentation will assume the Live galaxy and use its
+host.
 
-    https://pts-companion.orerve.net
+## Live CAPI host
+The main CAPI host is `companion.orerve.net`. **Since Odyssey
+Update 14 this only returns data for the Live galaxy.**
 
-instead of
+## Legacy CAPI host
+To retrieve data pertaining to the Legacy galaxy you must use the
+alternate host `legacy-companion.orerve.net`.
 
-    https://companion.orerve.net
-    
-in order to access it.
+## CAPI for any beta of the game
+In the past Frontier has sometimes provided a beta-specific CAPI host.
+When it was available (this was before Odyssey Update 14 and the galaxy
+split) the hostname was `pts-companion.orerve.net`.
 
-## End Points
+---
+# End Points
 
 You can check the currently available endpoints by sending a bare query
-to simply <https://companion.orerve.net/>.
+to the CAPI host, i.e. `/` path component as in <https://companion.orerve.net/>.
+
+This will produce output like:
+```json
+{
+  "links": [
+    {
+      "href": "/profile",
+      "rel": "CommanderProfile",
+      "type": "GET",
+      "title": "Commander profile, add ?language=[en|fr|de|ru|es|pt] to translate locName and LocDescriptions"
+    },
+    {
+      "href": "/market",
+      "rel": "CommodityMarket",
+      "type": "GET",
+      "title": "Last docked commodity market, add ?language=[en|fr|de|ru|es|pt] to translate locName and LocDescriptions"
+    },
+    {
+      "href": "/shipyard",
+      "rel": "Shipyard",
+      "type": "GET",
+      "title": "Last docked shipyard and outfitting"
+    },
+    {
+      "href": "/communitygoals",
+      "rel": "CommunityGoals",
+      "type": "GET",
+      "title": "Details on all currently active Community Goals and any contributions from this Commander, add ?language=[en|fr|de|ru|es|pt] to translate descriptions"
+    },
+    {
+      "href": "/journal",
+      "rel": "Journal",
+      "type": "GET",
+      "title": "Log lines from Commander Journal file, add (/:year(/:month(/:day))) to ask if previous journals are available"
+    },
+    {
+      "href": "/fleetcarrier",
+      "rel": "FleetCarrier",
+      "type": "GET",
+      "title": "Information about Commander's fleet carrier, add ?language=[en|fr|de|ru|es|pt] to translate locName and LocDescriptions"
+    },
+    {
+      "href": "/visitedstars",
+      "rel": "VisitedStars",
+      "type": "GET",
+      "title": "Download an zip archive containing the player's VisitedStarsCache.dat file. Status 102 indicates the file is being generated in the background, try again in a couple of minutes"
+    }
+  ]
+}
+```
 
 ## Profile
 		GET <https://companion.orerve.net/profile>
