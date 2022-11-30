@@ -17,4 +17,5 @@ db_sqlite_file: "/FULL/PATH/TO/fd-api-auth.sql"
 # Frontier ED CAPI server URL prefixes
 capi_urls:
 	live: "https://companion.orerve.net"
+	legacy: "https://legacy-companion.orerve.net"
 	pts: "https://pts-companion.orerve.net"
