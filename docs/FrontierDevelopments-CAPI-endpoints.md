@@ -451,7 +451,7 @@ provides access to information about the Cmdr's fleet carrier.
             1. `outstanding`: The remaining outstanding to fulfil the buy order
             1. `price`: The buy price per item
     1. `onfootmicroresources`: Buy and sell orders for micro resources (on foot materials)
-        1. `sales`: A Dict containing sell orders, with the key being the sell order ID (str) and the contents being a Dict in the following format:
+        1. `sales`: A Dict containing sell orders, or an empty list if there are no sell orders. The Dict key is the sell order ID (str) and the contents being a Dict in the following format:
             1. `id`: A unique identifier (int)
             1. `name`: The resource name
             1. `locName`: Localised resource name
