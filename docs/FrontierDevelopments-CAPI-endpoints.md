@@ -307,8 +307,8 @@ provides access to information about the Cmdr's fleet carrier.
 
 1. `name`: The carrier's callsign and name information
     1. `callsign`: The carrier's callsign, in the format A1A-A1A.
-    1. `vanityName`: The carrier's name, before any filtering is applied.
-    1. `filteredVanityName`: The carrier's name, after applying FDev's obscenity filter.
+    1. `vanityName`: The carrier's name, hex encoded, before any filtering is applied.
+    1. `filteredVanityName`: The carrier's name, hex encoded, after applying FDev's obscenity filter.
 
 1. `currentStarSystem`: Carrier's current system.
 1. `balance`: Amount of credits in carrier's bank account. This is separate from the owner CMDRs.
