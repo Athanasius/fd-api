@@ -542,8 +542,6 @@ provides access to information about the Cmdr's fleet carrier.
 
 1. `modules`: Available modules in outfitting
 
-1. `timestamp`: Timestamp of last update in ISO 8601 interchange standard, using `Z` as the UTC timezone suffix.
-
 ---
 
 ## Market
