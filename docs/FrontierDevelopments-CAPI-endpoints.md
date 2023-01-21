@@ -307,8 +307,8 @@ provides access to information about the Cmdr's fleet carrier.
 
 1. `name`: The carrier's callsign and name information
     1. `callsign`: The carrier's callsign, in the format A1A-A1A.
-    1. `vanityName`: The carrier's name, before any filtering is applied.
-    1. `filteredVanityName`: The carrier's name, after applying FDev's obscenity filter.
+    1. `vanityName`: The carrier's name, hex encoded, before any filtering is applied.
+    1. `filteredVanityName`: The carrier's name, hex encoded, after applying FDev's obscenity filter.
 
 1. `currentStarSystem`: Carrier's current system.
 1. `balance`: Amount of credits in carrier's bank account. This is separate from the owner CMDRs.
@@ -343,10 +343,14 @@ provides access to information about the Cmdr's fleet carrier.
     1. `cargoSpaceReserved`: Capacity reserved for cargo that is listed to BUY on market
     1. `crew`: Capacity used for crewing carrier modules
     1. `freeSpace`: Unused capacity
+    1. `microresourceCapacityTotal`: Capacity for all micro resources (on foot materials)
+    1. `microresourceCapacityFree`: Unused micro resources capacity
+    1. `microresourceCapacityUsed`: Capacity used for micro resources
+    1. `microresourceCapacityReserved`: Capacity reserved for micro resources that are listed to BUY at bartender.
 
 1. `itinerary`: Ships' itinerary
     1. `completed`: Completed jumps (list)
-       1. `departureTime`: Time carrier left system, `None` if currently in system
+        1. `departureTime`: Time carrier left system, `None` if currently in system
         1. `arrivalTime`: Time carrier arrived in system
         1. `state`: ?? (always `success` in seen entries)
         1. `visitDurationSeconds`: How long carrier was/has been in system, in seconds
@@ -372,6 +376,14 @@ provides access to information about the Cmdr's fleet carrier.
     1. `bankBalance`: Total credits in fleet carrier's account
     1. `bankReservedBalance`: Balance reserved for carrier upkeep
     1. `taxation`: Taxation rate for service use on the carrier
+    1. `service_taxation`: Individual taxation rates for each service (Dict)
+    	1. `bartender`: Taxation rate in % for bartender services
+        1. `pioneersupplies`: Taxation rate in % for Pioneer supply services
+        1. `rearm`: Taxation rate in % for rearming services
+        1. `refuel`: Taxation rate in % for refuelling services
+        1. `repair`: Taxation rate in % for repair services
+        1. `shipyard`: Taxation rate in % for shipyard services
+        1. `outfitting`: Taxation rate in % for outfitting services
     1. `numServices`: Number of services active on carrier
     1. `numOptionalServices`: Number of optional services active on carrier
     1. `debtThreshold`: Maximum negative credit balance before carrier automatically decommissions
@@ -382,6 +394,12 @@ provides access to information about the Cmdr's fleet carrier.
     1. `servicesCostToDate`: Total paid for services in carrier lifetime
     1. `jumpsCost`: Current pending cost for jumps made in the past week
     1. `numJumps`: Number of jumps made in the past week
+    1. `bartender`: Detailed information about bartender micro resource services (Dict)
+    	1. `microresourcesTotalValue`: Computed value of all micro resources (on foot materials) in stock
+    	1. `allTimeProfit`: Total profit earned on sales of micro resources
+    	1. `microresourcesForSale`: Number of micro resources listed for sale at bartender
+    	1. `microresourcesPurchaseOrders`: Number of micro resources listed to buy at bartender
+    	1. `profitHistory`: History of profit on recent transactions (List of ints)
 
 1. `servicesCrew`: Enumerates assigned crew on the carrier. All services share the
                     same crewMember data as shown in first example.
@@ -408,6 +426,9 @@ provides access to information about the Cmdr's fleet carrier.
    1. `voucherredemption`: Voucher redemption facility crew member information, if installed.
    1. `exploration`: Interstellar cartographer facility crew member information, if installed.
    1. `blackmarket`: Black market facility crew member information, if installed.
+   1. `bartender`: Bartender market facility crew member information, if installed.
+   1. `vistagenomics`: Exobiology facility crew member information, if installed.
+   1. `pioneersupplies`: On-foot supply facility crew member information, if installed.
 
 1. `cargo`: A list of all cargo items on board, in the following format:
     1. `commodity`: Non-localized commodity name
@@ -416,6 +437,50 @@ provides access to information about the Cmdr's fleet carrier.
     1. `value`: Value of commodity
     1. `stolen`: Whether the commodity is flagged as stolen
     1. `locName`: Localized name of commodity, follows carrier owner's localization
+
+1. `orders`: Information on all buy and sell orders
+    1. `commodities`: Buy and sell orders for standard cargo commodities
+        1. `sales`: A list of sell orders, in the following format:
+            1. `name`: The commodity name
+            1. `stock`: The quantity for sale
+            1. `price`: The sell price per item
+            1. `blackmarket`: Boolean, `true` if this item is for sale on the black market
+        1. `purchases`: A list of buy orders, in the following format:
+            1. `name`: The commodity name
+            1. `total`: The total buy order
+            1. `outstanding`: The remaining outstanding to fulfil the buy order
+            1. `price`: The buy price per item
+    1. `onfootmicroresources`: Buy and sell orders for micro resources (on foot materials)
+        1. `sales`: A Dict containing sell orders, or an empty list if there are no sell orders. The Dict key is the sell order ID (str) and the contents being a Dict in the following format:
+            1. `id`: A unique identifier (int)
+            1. `name`: The resource name
+            1. `locName`: Localised resource name
+            1. `stock`: The quantity for sale
+            1. `price`: The sell price per item
+        1. `purchases`: A list of buy orders, in the following format:
+            1. `name`: The resource name
+            1. `locName`: The localised resource name
+            1. `total`: The total buy order
+            1. `outstanding`: The remaining outstanding to fulfil the buy order
+            1. `price`: The buy price per item
+
+1. `carrierLocker`: All microresources (on foot materials) stored on the carrier, organised by type.
+    1. `assets`: A list of all stored assets
+        1. `id`: A unique identifier (int)
+        1. `quantity`: The number of items stored
+        1. `name`: The Resource name
+        1. `locName`: The localised resource name
+    1. `goods`: A list of all stored goods
+        1. `id`: A unique identifier (int)
+        1. `quantity`: The number of items stored
+        1. `name`: The Resource name
+        1. `locName`: The localised resource name
+    1. `data`: A list of all stored data
+        1. `id`: A unique identifier (int)
+        1. `quantity`: The number of items stored
+        1. `name`: The Resource name
+        1. `locName`: The localised resource name
+
 1. `reputation`: A list of faction reputations, in the following format.
     1. `majorFaction`: Name of faction
     1. `score`: Reputation score, 0 to 100
@@ -466,12 +531,16 @@ provides access to information about the Cmdr's fleet carrier.
         1. `buyPrice`: Price to buy commodity FROM carrier
         1. `sellPrice`: Price to sell commodity TO carrier
         1. `demand`: Number of commodity carrier is willing to buy
+        1. `legality`: ?? 
+        1. `meanPrice`: ??
+        1. `demandBracket`: ??
         1. `stockBracket`: ??
         1. `locName`: Localized name of commodity, depending on fleet carrier owner's locale
+
 1. `ships`: Shipyard information
    * `shipyard_list`: List containing available ships
-1. `modules`: Available modules in outfitting
 
+1. `modules`: Available modules in outfitting
 
 ---
 
