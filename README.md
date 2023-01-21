@@ -1,5 +1,9 @@
-**This is a work in progress.  The master branch now has working code,
-but for the latest check if the fdev-oauth2 branch is ahead.**
+**This project is no longer maintained.  Please feel free to work and continue it if you have the need.**
+===
+
+
+*This is a work in progress.  The master branch now has working code,
+but for the latest check if the fdev-oauth2 branch is ahead.*
 
 See [documentation](docs/README.md) for details on how this all works,
 including a walk-through for how to handle the oAuth2 flow yourself.
