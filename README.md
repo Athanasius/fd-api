@@ -1,4 +1,4 @@
-**This project is no longer maintained.  Please feel free to work and continue it if you have the need.**
+**This project is no longer maintained.  Please feel free to fork and continue it if you have the need.**
 ===
 
 
