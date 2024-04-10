@@ -1,4 +1,5 @@
 **This project is no longer maintained.  Please feel free to fork and continue it if you have the need.**
+===
 
 The documentation of the CAPI has been duplicated over to
 [EDCD/FDevIDs/Frontier API](https://github.com/EDCD/FDevIDs/tree/master/Frontier%20API)
@@ -7,7 +8,7 @@ The documentation of the CAPI has been duplicated over to
 This repo will continue to exist in case anyone finds the code examples
 useful.
 
-===
+---
 
 Tue 21 Mar 10:40:34 GMT 2023
 ===
